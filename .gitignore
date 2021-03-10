@@ -1,0 +1,3 @@
+train/*
+db.sqlite3
+*pycache*
