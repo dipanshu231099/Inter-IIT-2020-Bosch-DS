@@ -11,14 +11,12 @@ def addTrainingImage(request):
             return HttpResponse("Hola this was succesful")
     else:
         form = UploadTrainImage()
-    # return render(request, 'addTrainingImage.html', {'train_data_form':form})
-    return render(request, 'base.html')
+    return render(request, 'addTrainingImage.html', {'form':form})
 
 def trainImageHandler(img, class_name):
-    with open(class_name+'/'+class_name+'.jpeg','wb+') as destination:
+    with open('train/'+class_name+'/'+class_name+'.jpeg','wb+') as destination:
         for chunk in img.chunks():
             destination.write(chunk)
-
 
 def testImage():
     pass
