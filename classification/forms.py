@@ -12,6 +12,13 @@ class UploadTrainImage(forms.Form):
     class_name = forms.ChoiceField(choices=choices)
     img_file = forms.FileField()
 
+    choicesToAugment = [
+        ('horizontalShift', )
+    ]
+
+
+
+
 # class TestImageForm(forms.ModelForm):
 #     class Meta:
 #         model = TestAddImage

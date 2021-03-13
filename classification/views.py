@@ -3,7 +3,7 @@ from django.http import HttpResponse
 import os
 from .forms import UploadTrainImage 
 
-def index(request):
+def addTrainingImage(request):
     if request.method == 'POST':
         form = UploadTrainImage(request.POST, request.FILES)
         if form.is_valid():
@@ -11,7 +11,8 @@ def index(request):
             return HttpResponse("Hola this was succesful")
     else:
         form = UploadTrainImage()
-    return render(request, 'classification/about.html', {'train_data_form':form})
+    # return render(request, 'addTrainingImage.html', {'train_data_form':form})
+    return render(request, 'base.html')
 
 def trainImageHandler(img, class_name):
     with open(class_name+'/'+class_name+'.jpeg','wb+') as destination:
@@ -19,4 +20,9 @@ def trainImageHandler(img, class_name):
             destination.write(chunk)
 
 
-def testImage()
+def testImage():
+    pass
+
+
+
+
