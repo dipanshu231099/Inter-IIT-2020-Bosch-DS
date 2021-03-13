@@ -2,6 +2,12 @@ from django.shortcuts import render
 from django.http import HttpResponse
 import os
 from .forms import UploadTrainImage 
+from PIL import Image
+from numpy import asarray
+import os
+from keras.models import Sequential
+from keras.layers import Dense
+from keras.models import model_from_json
 
 def addTrainingImage(request):
     if request.method == 'POST':
@@ -24,5 +30,15 @@ def testImage():
     pass
 
 
+def getpredictions(img):
+    img_array=asarray(img)
+    img_array=img_array.astype('float')/255
+    json_file=open('/home/abhishek/django_project4/classification/model/ii.json','r')
+    loaded_model_json=json_file.read()
+    json_file.close()
+    loaded_model=model_from_json(loaded_model_json)
+    loaded_model.load_weights("/home/abhishek/django_project4/classification/model/ii.h5")
+    pred=loaded_model.predict(img_array,axis=1)
+    return pred
 
 
