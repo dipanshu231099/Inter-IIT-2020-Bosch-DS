@@ -1,3 +1,5 @@
 train/*
 db.sqlite3
 *pycache*
+.vscode
+media/*
