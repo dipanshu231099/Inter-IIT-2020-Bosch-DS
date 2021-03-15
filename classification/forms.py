@@ -10,4 +10,4 @@ class UploadTrainImage(forms.Form):
         ('class5','class5'),
     ]
     class_name = forms.ChoiceField(choices=choices)
-    img_file = forms.FileField()
+    img_file = forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True}))

@@ -2,4 +2,5 @@ train/*
 db.sqlite3
 *pycache*
 .vscode
+temp/*
 media/*
