@@ -73,3 +73,6 @@ def graphs(request):
                         opacity=0.8, marker_color='green')],
                output_type='div')
     return render(request, "graphs.html", context={'plot_div': plot_div})
+
+def augment(request):
+    return render(request,"augmentation.html")

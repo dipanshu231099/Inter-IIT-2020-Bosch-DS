@@ -1,33 +1,13 @@
 <!DOCTYPE HTML>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="drag_and_drop.js"></script>
-{% load static %}
-<script src="{% static 'drag.js' %}" >
-</script>
-<script>
-    document.getElementsByClassName('btn').forEach(element => {
-  
-  element.onclick(function() {
-      var text = this.innerHTML; 
-      var itemFound = false; 
-      $('ul.justList li').each(function() { 
-      if ($(this).text() === text) { 
-              itemFound = true;
-          }
-      });
-      if (!itemFound) { 
-          $('<li/>', {
-              html: text
-          }).appendTo('ul.justList') 
-      } else { 
-          $(`ul.justList li:contains(${text})`).remove();
-      }
-  });
-});
-</script>
+<html>
+    <head>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    </head>
+    <body>
+        
 <div class="container">
   <div class="text-center">
-    <h1>Input The augmentations</h1>
+    <h1>Create a Meal</h1>
   </div>
   <div class="row">
     <div class="col">
@@ -52,6 +32,7 @@
       </div>
     </div>
     <div class="col-8">
+      
       <div class="row">
         <div class="col">
           <div class="text-center">
@@ -62,7 +43,33 @@
             </div>
           </div>
         </div>
+        
       </div>
     </div>
   </div>
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    </body>
+    <script>
+        $('.btn').click(function() {
+  var text = this.innerHTML; 
+
+  var itemFound = false; 
+  $('ul.justList li').each(function() { 
+    if ($(this).text() === text) { 
+      itemFound = true;
+    }
+  });
+
+
+  if (!itemFound) { 
+    $('<li/>', {
+      html: text
+    }).appendTo('ul.justList') 
+  } else { 
+    $(`ul.justList li:contains(${text})`).remove();
+  }
+});
+</script>
+</html>
+
