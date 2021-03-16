@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 import os
 from .forms import UploadTrainImage 
+from .forms import UploadTestImage
 from PIL import Image
 from numpy import asarray
 import os
@@ -16,23 +17,41 @@ from django.core.files.storage import FileSystemStorage
 from keras.utils import to_categorical
 import numpy as np
 import tensorflow as tf
-from .forms import UploadTrainImage
+
 from plotly.offline import plot
 from plotly.graph_objs import Scatter
 
 
 def addTrainingImage(request):
+    form = UploadTrainImage()
+    form1 = UploadTestImage()
     if request.method == 'POST':
-        form = UploadTrainImage(request.POST, request.FILES)
-        files = request.FILES.getlist('img_file')
-        if form.is_valid():
-            for fname in files:
-                print(fname)
-                trainImageHandler(fname, fname, request.POST['class_name'])
-            return HttpResponse("Succesful")
-    else:
-        form = UploadTrainImage()
-    return render(request, 'addTrainingImage.html', {'form':form})
+        if(request.POST.get("form_type")=='test'):
+            form1 = UploadTestImage(request.POST, request.FILES)
+            image = request.FILES['testing_file']
+            if form1.is_valid():
+                
+                pred=getpredictions(image)
+                
+                return HttpResponse(pred)
+            else:
+                form1 = UploadTestImage()
+                form = UploadTrainImage()
+
+
+        else:
+
+            form = UploadTrainImage(request.POST, request.FILES)
+            files = request.FILES.getlist('img_file')
+            if form.is_valid():
+                for fname in files:
+                    print(fname)
+                    trainImageHandler(fname, fname, request.POST['class_name'])
+                return HttpResponse("Succesful")
+            else:
+                form = UploadTrainImage()
+                form1 = UploadTestImage()
+    return render(request, 'addTrainingImage.html', {'form':form,'form1':form1})
 
 def trainImageHandler(fname, img, class_name):
     with open('train/'+class_name+'/'+str(fname)+'.jpeg','wb+') as destination:
@@ -41,8 +60,9 @@ def trainImageHandler(fname, img, class_name):
             destination.write(chunk)
 
 
-def testImage():
-    pass
+
+        
+    
 
 
 def getpredictions(img):

@@ -15,5 +15,16 @@
         </form> 
 
     </div> 
+
+    <div class="container">
+        <h1>Give us an image to test :) </h1>
+        <label> Add an single jpeg image to test and we will try to pridict its class</label>
+        <form method="post" id="test" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{form1.as_p}}
+             <input type="hidden" name="form_type" value="test">
+            <button type="submit" class="btn btn-primary">Upload</button> 
+        </form>
+    </div>
 </body>
 {% endblock content %}
