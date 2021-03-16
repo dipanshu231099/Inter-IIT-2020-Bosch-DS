@@ -5,7 +5,11 @@ db.sqlite3
 temp/*
 media/*
 <<<<<<< HEAD
+<<<<<<< HEAD
 classification/model/data.npy
 =======
 model/*
 >>>>>>> 2131428... ignored model folder
+=======
+classification/model/*
+>>>>>>> b3f0ffd... ignored model folder
