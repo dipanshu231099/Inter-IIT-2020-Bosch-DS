@@ -11,7 +11,8 @@
         <form method = "post" enctype="multipart/form-data"> 
             {% csrf_token %} 
             {{form.as_p}}
-            <button type="submit" class="btn btn-primary">Upload</button> 
+            <button type="submit" class="btn btn-primary">Upload</button>
+            <button type="submit" value='yes' name ="augmentation" class="btn btn-primary">Upload and specify augmentations</button> 
         </form> 
 
     </div> 
@@ -23,7 +24,8 @@
             {% csrf_token %}
             {{form1.as_p}}
              <input type="hidden" name="form_type" value="test">
-            <button type="submit" class="btn btn-primary">Upload</button> 
+            <button type="submit" class="btn btn-primary">Upload</button>
+             
         </form>
     </div>
 </body>

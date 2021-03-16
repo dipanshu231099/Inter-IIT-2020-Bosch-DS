@@ -18,6 +18,9 @@ from keras.utils import to_categorical
 import numpy as np
 import tensorflow as tf
 
+from .augmentations import *
+from .retrain_model import *
+
 from plotly.offline import plot
 from plotly.graph_objs import Scatter
 
@@ -47,7 +50,10 @@ def addTrainingImage(request):
                 for fname in files:
                     print(fname)
                     trainImageHandler(fname, fname, request.POST['class_name'])
-                return HttpResponse("Succesful")
+                if(request.POST.get("augmentation")=='yes'):
+                    return HttpResponse("aaaaaaaaaaaaaaa")
+                else:
+                    return HttpResponse("Succesful")
             else:
                 form = UploadTrainImage()
                 form1 = UploadTestImage()
@@ -96,3 +102,9 @@ def graphs(request):
 
 def augment(request):
     return render(request,"augmentation.html")
+
+
+def re_train_model(request):
+    a=retrain()
+    return HttpResponse(a)
+
