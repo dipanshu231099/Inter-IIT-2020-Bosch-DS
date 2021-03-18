@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 import os
 from .forms import UploadTrainImage 
@@ -24,6 +24,8 @@ from .retrain_model import *
 from plotly.offline import plot
 from plotly.graph_objs import Scatter
 
+def index(request):
+    None
 
 def addTrainingImage(request):
     form = UploadTrainImage()
