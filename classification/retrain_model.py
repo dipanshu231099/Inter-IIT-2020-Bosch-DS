@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-import numpy as np 
-import pandas as pd 
+import numpy as np
+import pandas as pd
 import matplotlib.pyplot as plt
 import tensorflow as tf
 import cv2
@@ -24,7 +24,7 @@ def disp(im1,im2,n,save=False):
     fig, axs = plt.subplots(1,2)
     axs[0].imshow(im1)
     axs[0].set_title('Original')
-    axs[1].imshow(im2)    
+    axs[1].imshow(im2)
     axs[1].set_title('Augmented')
     fig.suptitle('Class {}'.format(n))
     plt.show()
@@ -66,7 +66,7 @@ def retrain():
             'zoom']
 
 
-            
+
     arr = [0]
     for i in range(1,len(labels)):
         if labels[i]!=labels[i-1]:
@@ -80,13 +80,13 @@ def retrain():
         b=random.randint(arr[i], arr[i+1])
         rands.append(min(a,b))
         rands.append(max(a,b))
-            
-            
-                
-            
+
+
+
+
     labels = np.load('/home/abhishek/django_project4/classification/model/labels.npy', allow_pickle=True)
-    data_orig = np.load('/home/abhishek/django_project4/classification/model/data.npy', allow_pickle=True)  
-    data = np.load('/home/abhishek/django_project4/classification/model/data.npy', allow_pickle=True) 
+    data_orig = np.load('/home/abhishek/django_project4/classification/model/data.npy', allow_pickle=True)
+    data = np.load('/home/abhishek/django_project4/classification/model/data.npy', allow_pickle=True)
     cl_num = 0
     for i in tqdm.tqdm(range(len(data))):
         try:
@@ -109,7 +109,7 @@ def retrain():
 
     #Spliting the images into train and validation sets
     (X_train,X_val)=Cells[(int)(0.2*len(labels)):],Cells[:(int)(0.2*len(labels))]
-    X_train = X_train.astype('float32')/255 
+    X_train = X_train.astype('float32')/255
     X_val = X_val.astype('float32')/255
     (y_train,y_val)=labels[(int)(0.2*len(labels)):],labels[:(int)(0.2*len(labels))]
 
@@ -141,8 +141,8 @@ def retrain():
     '''
     #Compilation of the model
     model.compile(
-        loss='categorical_crossentropy', 
-        optimizer='adam', 
+        loss='categorical_crossentropy',
+        optimizer='adam',
         metrics=['accuracy']
     )
 
@@ -164,7 +164,7 @@ def retrain():
     epochs = 1
     history = model.fit(X_train, y_train, batch_size=32, epochs=epochs,
     validation_data=(X_val, y_val))
-    
+
     # y_test=pd.read_csv("data/GT-final_test.csv", delimiter=';',)
     # labels=y_test['Filename'].values
     # y_test=y_test['ClassId'].values
@@ -180,7 +180,7 @@ def retrain():
 
 
     X_test=np.array(data)
-    X_test = X_test.astype('float32')/255 
+    X_test = X_test.astype('float32')/255
     #np.save('/home/abhishek/django_project4/classification/model/X_test.npy', X_test)
 
     pred = np.argmax(model.predict(X_test), axis = 1)

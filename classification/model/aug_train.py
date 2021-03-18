@@ -12,8 +12,8 @@ Created on Thu Mar 11 17:04:50 2021
 @author: prajw
 """
 
-import numpy as np 
-import pandas as pd 
+import numpy as np
+import pandas as pd
 import matplotlib.pyplot as plt
 import tensorflow as tf
 import cv2
@@ -63,12 +63,12 @@ def disp(im1,im2,n,save=False):
     fig, axs = plt.subplots(1,2)
     axs[0].imshow(im1)
     axs[0].set_title('Original')
-    axs[1].imshow(im2)    
+    axs[1].imshow(im2)
     axs[1].set_title('Augmented')
-    fig.suptitle('Class {}'.format(n))
+    fig.suptitle('Class {}'.format(n))P
     plt.show()
     plt.savefig('class_{}_aug.jpg'.format(n))
-        
+
 arr = [0]
 for i in range(1,len(labels)):
     if labels[i]!=labels[i-1]:
@@ -82,16 +82,16 @@ for i in range(len(arr)-1):
     b=random.randint(arr[i], arr[i+1])
     rands.append(min(a,b))
     rands.append(max(a,b))
-        
-        
-            
+
+
+
 #%%
 '''
 def num(i):
     i = str(i)
-    return '0'*(5-len(i))+i       
-        
-        
+    return '0'*(5-len(i))+i
+
+
 for i in range(classes) :
     path = "data/Final_Training/Images/{0}/".format(num(i))
     print(path)
@@ -106,10 +106,10 @@ for i in range(classes) :
         except AttributeError:
             print(" ")
 
-'''          
+'''
 labels = np.load('labels.npy')
-data_orig = np.load('data.npy')  
-data = np.load('data.npy') 
+data_orig = np.load('data.npy')
+data = np.load('data.npy')
 cl_num = 0
 for i in tqdm.tqdm(range(len(data))):
     try:
@@ -132,7 +132,7 @@ labels=labels[s]
 
 #Spliting the images into train and validation sets
 (X_train,X_val)=Cells[(int)(0.2*len(labels)):],Cells[:(int)(0.2*len(labels))]
-X_train = X_train.astype('float32')/255 
+X_train = X_train.astype('float32')/255
 X_val = X_val.astype('float32')/255
 (y_train,y_val)=labels[(int)(0.2*len(labels)):],labels[:(int)(0.2*len(labels))]
 
@@ -168,8 +168,8 @@ optimizer = Adam(learning_rate=lr_schedule)
 '''
 #Compilation of the model
 model.compile(
-    loss='categorical_crossentropy', 
-    optimizer='adam', 
+    loss='categorical_crossentropy',
+    optimizer='adam',
     metrics=['accuracy']
 )
 
@@ -227,7 +227,7 @@ for f in tqdm.tqdm(labels):
 
 
 X_test=np.array(data)
-X_test = X_test.astype('float32')/255 
+X_test = X_test.astype('float32')/255
 np.save('X_test.npy', X_test)
 
 pred = np.argmax(model.predict(X_test), axis = 1)
