@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 import os
-from .forms import UploadTrainImage 
+from .forms import UploadTrainImage
 from .forms import UploadTestImage
 from PIL import Image
 from numpy import asarray
@@ -35,9 +35,9 @@ def addTrainingImage(request):
             form1 = UploadTestImage(request.POST, request.FILES)
             image = request.FILES['testing_file']
             if form1.is_valid():
-                
+
                 pred=getpredictions(image)
-                
+
                 return HttpResponse(pred)
             else:
                 form1 = UploadTestImage()
@@ -69,16 +69,16 @@ def trainImageHandler(fname, img, class_name):
 
 
 
-        
-    
+
+
 
 
 def getpredictions(img):
     with open('temp/ok.jpeg','wb+') as destination:
         for chunk in img.chunks():
             destination.write(chunk)
-    
-    img_array=cv2.imread('temp/ok.jpeg') 
+
+    img_array=cv2.imread('temp/ok.jpeg')
     im=img_array.astype('float32')/255
     im = cv2.resize(img_array, (32, 32), cv2.INTER_CUBIC)
     im=np.resize(im,(1,32,32,3))
@@ -110,3 +110,5 @@ def re_train_model(request):
     a=retrain()
     return HttpResponse(a)
 
+def direct(request):
+    return render(request,"retrain.html")

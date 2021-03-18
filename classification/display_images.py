@@ -17,7 +17,7 @@ def display():   #give augs list to it
         im_random=random.choice(files)
         image=Image.open(path+i+"/"+im_random)
         im=cv2.imread(path+i+"/"+im_random)
-        os.chdir("/home/abhishek/django_project4/augmented_images")
+        os.chdir("/home/abhishek/django_project4/augmented_images/all_classes")
         n=i+".jpg"
         cv2.imwrite(n,im)
         a=trans(im,augs)

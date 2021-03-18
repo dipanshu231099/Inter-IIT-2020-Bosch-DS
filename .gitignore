@@ -6,6 +6,7 @@ temp/*
 media/*
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 classification/model/data.npy
 =======
 model/*
@@ -13,3 +14,7 @@ model/*
 =======
 classification/model/*
 >>>>>>> b3f0ffd... ignored model folder
+=======
+classification/model/data.npy
+augumented_images/** /all_classes/**/new_classes/**
+>>>>>>> a0a9059... modified retrain.html
