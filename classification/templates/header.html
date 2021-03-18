@@ -1,6 +1,41 @@
-
 <head>
     <meta charset="utf-8">
     <title>Home Page</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
+
+<style>
+    .border-md-right {
+        border-right: 1px solid silver;
+    }
+
+    @media (max-width: 768px) {
+        .border-md-right {
+            border-right: none;
+        }
+    }
+</style>
+
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+    <div class="container">
+        <a class="navbar-brand" href="#">IIT Mandi - Bosch Data Science</a>
+        <ul class="navbar-nav">
+            <li class="nav-item active border-md-right">
+                <a class="nav-link" href="#">Home</a>
+            </li>
+            <li class="nav-item border-md-right">
+                <a class="nav-link" href="#">Train</a>
+            </li>
+            <li class="nav-item border-md-right">
+                <a class="nav-link" href="{% url 'addTrainingImage' %}">Add Images</a>
+            </li>
+            <li class="nav-item border-md-right">
+                <a class="nav-link" href="{% url 'plotly_graghs' %}">Graphs</a>
+            </li>
+            <li class="nav-item border-md-right">
+                <a class="nav-link" href="{% url 'augmentInput' %}">Augmentations</a>
+            </li>
+        </ul>
+    </div>
+</nav>
