@@ -1,0 +1,15 @@
+{% load static %}
+
+<div class='row'>
+
+{% for image_pre, image_after in images %}
+    <div class='col-sm-5'>
+        <img src="{% static image_pre %}" style="width:100%;">
+    </div>
+    <div class = 'col-sm-2'></div>
+    <div class='col-sm-5'>
+        <img src="{% static image_after %}" style="width:100%">
+    </div>
+{% endfor %}
+
+</div>

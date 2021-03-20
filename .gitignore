@@ -4,21 +4,4 @@ db.sqlite3
 .vscode
 temp/*
 media/*
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-classification/model/data.npy
-=======
-model/*
->>>>>>> 2131428... ignored model folder
-=======
-classification/model/*
->>>>>>> b3f0ffd... ignored model folder
-=======
-classification/model/data.npy
-=======
-
->>>>>>> 5147d8f... a p
-augumented_images/** /all_classes/**/new_classes/**
->>>>>>> a0a9059... modified retrain.html
+classification/static/*

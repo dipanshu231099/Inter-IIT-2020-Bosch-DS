@@ -38,17 +38,12 @@ def addTrainingImage(request):
             form1 = UploadTestImage(request.POST, request.FILES)
             image = request.FILES['testing_file']
             if form1.is_valid():
-
                 pred=getpredictions(image)
-
                 return HttpResponse(pred)
             else:
                 form1 = UploadTestImage()
                 form = UploadTrainImage()
-
-
         else:
-
             form = UploadTrainImage(request.POST, request.FILES)
             files = request.FILES.getlist('img_file')
             if form.is_valid():
@@ -70,17 +65,10 @@ def trainImageHandler(fname, img, class_name):
         for chunk in img.chunks():
             destination.write(chunk)
 
-
-
-
-
-
-
 def getpredictions(img):
     with open('temp/ok.jpeg','wb+') as destination:
         for chunk in img.chunks():
             destination.write(chunk)
-
     img_array=cv2.imread('temp/ok.jpeg')
     im=img_array.astype('float32')/255
     im = cv2.resize(img_array, (32, 32), cv2.INTER_CUBIC)
@@ -91,10 +79,7 @@ def getpredictions(img):
     loaded_model=model_from_json(loaded_model_json)
     loaded_model.load_weights("/home/abhishek/django_project4/classification/model/ii_using_sigmoid.h5")
     pred=loaded_model.predict(im)
-
     return pred
-
-
 
 def graphs(x_data,y_data):
     plot_div = plot([Scatter(x=x_data, y=y_data,
@@ -107,7 +92,6 @@ def augment(request):
     return render(request,"augmentation.html")
 
 def Merge(request):
-
     if request.method == 'POST':
         if request.POST.get('aug1')=="first":
 
