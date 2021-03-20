@@ -19,6 +19,7 @@ from keras.optimizers.schedules import ExponentialDecay
 from keras.optimizers import Adam
 import matplotlib.pyplot as plt
 from sklearn.metrics import accuracy_score, confusion_matrix
+import os
 
 def disp(im1,im2,n,save=False):
     fig, axs = plt.subplots(1,2)
@@ -30,7 +31,14 @@ def disp(im1,im2,n,save=False):
     plt.show()
     plt.savefig('class_{}_aug.jpg'.format(n))
 
-def retrain():
+def retrain(condition,augs = ['horizontal_shift','brightness','zoom']):
+
+    #Original data is in a data.npy file and the new images are in train folder
+    #condition (first) - retrain data.npy without any augments
+    #condition (second) - retrain data.npy with augments
+    #condition (Third)- apply augments on combined classes and then retrain
+    #condition (Fourth)- apply augments on new classes and then combine and retrain
+
     # Reading the input images and putting them into a numpy array
     data=[]
     labels=[]
@@ -61,15 +69,13 @@ def retrain():
             'clip']
 
     '''
-    augs = ['horizontal_shift',
-            'brightness',
-            'zoom']
+
 
 
 
     arr = [0]
     for i in range(1,len(labels)):
-        if labels[i]!=labels[i-1]:
+        if labels[i] != labels[i-1]:
             arr.append(i)
     arr.append(39209)
 
@@ -88,6 +94,7 @@ def retrain():
     data_orig = np.load('/home/abhishek/django_project4/classification/model/data.npy', allow_pickle=True)
     data = np.load('/home/abhishek/django_project4/classification/model/data.npy', allow_pickle=True)
     cl_num = 0
+
     for i in tqdm.tqdm(range(len(data))):
         try:
             data[i] = trans(data[i], augs)
@@ -161,7 +168,7 @@ def retrain():
     '''
     model.summary()
 
-    epochs = 1
+    epochs = 3
     history = model.fit(X_train, y_train, batch_size=32, epochs=epochs,
     validation_data=(X_val, y_val))
 
@@ -193,7 +200,7 @@ def retrain():
     # plt.show()
 
     model.save_weights('classification/model/ii_aug_no_dat.h5')
-    return "the deed is done"
+    return history.history['val_accuracy'],history.history["accuracy"]
 
 
 

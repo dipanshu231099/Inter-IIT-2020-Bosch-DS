@@ -5,13 +5,13 @@ Created on Thu Mar 11 17:32:05 2021
 @author: prajw
 """
 import cv2
-import random 
+import random
 import numpy as np
 
 def fill(img, h, w):
     img = cv2.resize(img, (h, w), cv2.INTER_CUBIC)
     return img
-        
+
 def horizontal_shift(img, ratio=0.0):
     if ratio > 1 or ratio < 0:
         print('Value should be less than 1 and greater than 0')
@@ -46,13 +46,13 @@ def brightness(img, low = 0.5, high = 3):
     hsv = np.array(hsv, dtype = np.float64)
     hsv[:,:,1] = hsv[:,:,1]*value
     hsv[:,:,1][hsv[:,:,1]>255]  = 255
-    hsv[:,:,2] = hsv[:,:,2]*value 
+    hsv[:,:,2] = hsv[:,:,2]*value
     hsv[:,:,2][hsv[:,:,2]>255]  = 255
     hsv = np.array(hsv, dtype = np.uint8)
     img = cv2.cvtColor(hsv, cv2.COLOR_HSV2BGR)
     return img
 
-def zoom(img, value):
+def zoom(img, value=0.1):
     if value > 1 or value < 0:
         print('Value for zoom should be less than 1 and greater than 0')
         return img
@@ -85,7 +85,7 @@ def vertical_flip(img, flag):
         return cv2.flip(img, 0)
     else:
         return img
-    
+
 def rotation(img, angle):
     angle = int(random.uniform(-angle, angle))
     h, w = img.shape[:2]
@@ -129,62 +129,62 @@ def trans(img, augs):
         r = random.random()
         if i == 'horizontal_shift':
             img = horizontal_shift(img, ratio = r)
-            
+
         if i == 'vertical_shift':
             img = vertical_shift(img, ratio = r)
-        
+
         if i == 'brightness':
             img = brightness(img)
-        
+
         if i == 'zoom':
-            
+
             img = zoom(img, value = r)
-        
+
         if i == 'channel_shift':
             img = channel_shift(img)
-        
+
         if i == 'horizontal_flip':
-            
+
             img = horizontal_flip(img, True)
-            
+
         if i == 'vertical_flip':
-            
+
             img = vertical_flip(img, True)
-            
+
         if i == 'rotation':
-            
+
             img = rotation(img, angle = r*30)
-            
+
         if i == 'convolution':
             r = np.random.rand(3,3)
             img = convolution(img, r)
-            
+
         if i == 'blur':
-            
+
             img = blur(img)
-            
+
         if i == 'gaussian':
-            
+
             img = gaussian_blur(img)
-            
+
         if i == 'median':
-            
+
             img = median_blur(img)
-            
+
         if i == 'dialate':
-            
+
             img = dialate(img)
-            
+
         if i == 'erode':
-            
+
             img = erode(img)
-            
+
         if i == 'morph':
-            
+
             img = morph_grad(img)
-            
+
         if i == 'clip':
-            
+
             img = clip(img)
-        
+
     return img

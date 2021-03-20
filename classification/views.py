@@ -20,9 +20,12 @@ import tensorflow as tf
 
 from .augmentations import *
 from .retrain_model import *
+from .display_images import *
 
 from plotly.offline import plot
 from plotly.graph_objs import Scatter
+
+
 
 def index(request):
     None
@@ -93,22 +96,52 @@ def getpredictions(img):
 
 
 
-def graphs(request):
-    x_data = [0,1,2,3]
-    y_data = [x**2 for x in x_data]
+def graphs(x_data,y_data):
     plot_div = plot([Scatter(x=x_data, y=y_data,
                         mode='lines', name='test',
                         opacity=0.8, marker_color='green')],
                output_type='div')
-    return render(request, "graphs.html", context={'plot_div': plot_div})
+    return plot_div
 
 def augment(request):
     return render(request,"augmentation.html")
 
+def Merge(request):
+
+    if request.method == 'POST':
+        if request.POST.get('aug1')=="first":
+
+            display("first",[])
+            request.session['token'] = 1
+            return redirect("/app/dis_org_aug/")
+
+        if request.POST.get('aug1')=="Second":
+            display("second",[])
+            request.session['token'] = 2
+            return redirect("/dis_org_aug/")
+
+    return render (request,"Merge_or_not.html")
+
+
+
+
+
+
+
 
 def re_train_model(request):
-    a=retrain()
-    return HttpResponse(a)
+    request.session['token'] ==1
+    if(request.session['token'] ==1):
+
+
+        a,b=retrain(1,[])
+        plot_div = graphs(a,b)
+
+        return render(request,"graphs.html", context={'plot_div': plot_div})
+    elif (request.session['token']== 2):
+        return HttpResponse("its 2")
+    else:
+        return HttpResponse("hello world")
 
 def direct(request):
     return render(request,"retrain.html")

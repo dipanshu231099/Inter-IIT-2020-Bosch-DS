@@ -8,5 +8,6 @@ urlpatterns = [
     path('graphs/', views.graphs, name='plotly_graghs'),
     path('augment/', views.augment, name='augmentInput'),
     path('retrain/', views.re_train_model, name='retrainingdata'),
-    path('retrain2/', views.direct , name="hub")
+    path('retrain2/', views.direct , name="hub"),
+    path('Merge/', views.Merge , name="hub2")
 ]
