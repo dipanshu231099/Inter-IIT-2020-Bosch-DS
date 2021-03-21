@@ -7,3 +7,7 @@ media/*
 classification/static/**/augmented_images/**/all_classes/**/original/**/augmented/**
 classification/static/**/augmented_images/**/new_classes/**/original/**/augmented/**
 classification/model/data.npy
+classification/model/new_data.npy
+classification/model/new_labels.npy
+classification/model/X_test.npy
+classification/model/y_test.npy
