@@ -10,6 +10,10 @@
         border-right: 1px solid silver;
     }
 
+    body {
+        min-height: 100vh;
+    }
+
     @media (max-width: 768px) {
         .border-md-right {
             border-right: none;
@@ -30,9 +34,7 @@
             <li class="nav-item border-md-right">
                 <a class="nav-link" href="{% url 'addTrainingImage' %}">Add Images</a>
             </li>
-            <li class="nav-item border-md-right">
-                <a class="nav-link" href="{% url 'plotly_graghs' %}">Graphs</a>
-            </li>
+
             <li class="nav-item border-md-right">
                 <a class="nav-link" href="{% url 'augmentInput' %}">Augmentations</a>
             </li>

@@ -38,17 +38,12 @@ def addTrainingImage(request):
             form1 = UploadTestImage(request.POST, request.FILES)
             image = request.FILES['testing_file']
             if form1.is_valid():
-
                 pred=getpredictions(image)
-
                 return HttpResponse(pred)
             else:
                 form1 = UploadTestImage()
                 form = UploadTrainImage()
-
-
         else:
-
             form = UploadTrainImage(request.POST, request.FILES)
             files = request.FILES.getlist('img_file')
             if form.is_valid():
@@ -70,17 +65,10 @@ def trainImageHandler(fname, img, class_name):
         for chunk in img.chunks():
             destination.write(chunk)
 
-
-
-
-
-
-
 def getpredictions(img):
     with open('temp/ok.jpeg','wb+') as destination:
         for chunk in img.chunks():
             destination.write(chunk)
-
     img_array=cv2.imread('temp/ok.jpeg')
     im=img_array.astype('float32')/255
     im = cv2.resize(img_array, (32, 32), cv2.INTER_CUBIC)
@@ -91,19 +79,13 @@ def getpredictions(img):
     loaded_model=model_from_json(loaded_model_json)
     loaded_model.load_weights("/home/abhishek/django_project4/classification/model/ii_using_sigmoid.h5")
     pred=loaded_model.predict(im)
-
     return pred
-
-# def graphs(request):
-#     retrain(1,[])
-#     return render(request,"graphs.html")
 
 
 def augment(request):
     return render(request,"augmentation.html")
 
 def Merge(request):
-
     if request.method == 'POST':
         if request.POST.get('aug1')=="first":
 
@@ -118,26 +100,48 @@ def Merge(request):
 
     return render (request,"Merge_or_not.html")
 
-
-
-
-
-
-
-
 def re_train_model(request):
-    request.session['token'] ==1
+    request.session['token'] ==1  #to be changed
     if(request.session['token'] ==1):
 
-        acc,val_acc,loss,val_loss=retrain(1,[])
+        acc,val_acc,loss,val_loss=retrain("third",[])
         plotgraphs(4,acc,val_acc,loss,val_loss)
 
+        return render(request,"graphs.html", context={'plot_div': plot_div})
 
-        return render(request,"graphs.html")
+
     elif (request.session['token']== 2):
         return HttpResponse("its 2")
     else:
         return HttpResponse("hello world")
+
+def display_images(request):
+    request.session['token'] =1  #to be changed
+    if(request.session['token'] ==1):
+        images=[]
+        original="augmented_images/new_classes/original"
+        augmented="augmented_images/new_classes/augmented"
+        im1=os.listdir("/home/abhishek/django_project4/classification/static/augmented_images/new_classes/original")
+        im2=os.listdir("/home/abhishek/django_project4/classification/static/augmented_images/new_classes/augmented")
+        for i in range(0,len(im1)):
+            a=original+'/'+im1[i]
+            b=augmented+'/'+im2[i]
+            c=[a,im1[i],b,im2[i]]
+            images.append(c)
+        return render(request,"dis_org_aug.html",context={'images':images})
+    else:
+        original="augmented_images/all_classes/original"
+        augmented="augmented_images/all_classes/augmented"
+        im1=os.listdir("/home/abhishek/django_project4/classification/static/augmented_images/new_classes/original")
+        im2=os.listdir("/home/abhishek/django_project4/classification/static/augmented_images/new_classes/augmented")
+        for i in range(0,len(im1)):
+            a=original+im1[i]
+            b=augmented+im2[i]
+            c=[a,im1[i],b,im2[i]]
+            images.append(c)
+
+
+        return render(request,"dis_org_aug.html",context={'images':images})
 
 def direct(request):
     return render(request,"retrain.html")

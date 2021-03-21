@@ -26,7 +26,7 @@ SECRET_KEY = 'l*@mk=o*z+gog6o5%p25a15j^6p(bnlb^vb^yy^#jr8mmglbn1'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'c0a9ece9df9b.ngrok.io']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '9b1e9492300f.ngrok.io']
 
 
 # Application definition
@@ -119,5 +119,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "static"),
+)
 MEDIA_ROOT =  os.path.join(BASE_DIR, 'media') 
 MEDIA_URL = '/media/'

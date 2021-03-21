@@ -1,75 +1,41 @@
-<!DOCTYPE HTML>
-<html>
-    <head>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    </head>
-    <body>
+{% extends 'base.html' %}
+
+{% block content %}
+<body>
         
 <div class="container">
   <div class="text-center">
-    <h1>Create a Meal</h1>
+    <h1></h1>
   </div>
   <div class="row">
-    <div class="col">
+    <div class="col-sm-6">
       <div class="text-center">
-        <h3>Different Type of Augmentations</h3>
+        <h3>Choose Augmentations</h3>
         <div class="text-left">
-          <ul>
-            <div class="row">
-              <button class="btn my-1">Horizonatl shift</button>
-            </div>
-            <div class="row">
-              <button class="btn my-1">Blur</button>
-            </div>
-            <div class="row">
-              <button class="btn my-1">Convolution</button>
-            </div>
-            <div class="row">
-              <button class="btn my-1">Horizontal Right</button>
-            </div>
+              <button class="btn btn-primary my-1 w-100">Horizonatl shift</button>
+              <button class="btn btn-primary my-1 w-100">Blur</button>
+              <button class="btn btn-primary my-1 w-100">Convolution</button>
+              <button class="btn btn-primary my-1 w-100">Horizontal Right</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-6">
+      <div class="text-center">
+        <h3>Selected  Augmentations</h3>
+        <div class="text-center">
+          <ul class="justList">
           </ul>
         </div>
       </div>
     </div>
-    <div class="col-8">
-      
-      <div class="row">
-        <div class="col">
-          <div class="text-center">
-            <h4>Selected  Augmentations in order</h4>
-            <div class="text-left">
-              <ul class="justList">
-              </ul>
-            </div>
-          </div>
-        </div>
         
       </div>
     </div>
   </div>
 </div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    </body>
-    <script>
-        $('.btn').click(function() {
-  var text = this.innerHTML; 
 
-  var itemFound = false; 
-  $('ul.justList li').each(function() { 
-    if ($(this).text() === text) { 
-      itemFound = true;
-    }
-  });
-
-
-  if (!itemFound) { 
-    $('<li/>', {
-      html: text
-    }).appendTo('ul.justList') 
-  } else { 
-    $(`ul.justList li:contains(${text})`).remove();
-  }
-});
-</script>
-</html>
+</body>
+{% endblock content %}
+    
 

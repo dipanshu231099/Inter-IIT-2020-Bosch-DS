@@ -22,7 +22,7 @@ from sklearn.metrics import accuracy_score, confusion_matrix
 import os
 import plotly.graph_objects as go
 import plotly.express as px
-
+from .make_npyfiles import *
 
 def disp(im1,im2,n,save=False):
     fig, axs = plt.subplots(1,2)
@@ -91,21 +91,53 @@ def retrain(condition,augs = ['horizontal_shift','brightness','zoom']):
         rands.append(max(a,b))
 
 
-
-
-    labels = np.load('/home/abhishek/django_project4/classification/model/labels.npy', allow_pickle=True)
-    data_orig = np.load('/home/abhishek/django_project4/classification/model/data.npy', allow_pickle=True)
-    data = np.load('/home/abhishek/django_project4/classification/model/data.npy', allow_pickle=True)
     cl_num = 0
+    labels = np.load('/home/abhishek/django_project4/classification/model/labels.npy', allow_pickle=True)
+    data= np.load('/home/abhishek/django_project4/classification/model/data.npy', allow_pickle=True)
+    test_data=np.load("classification/model/X_test.npy")
+    test_labels=np.load("classification/model/y_test.npy")
 
-    for i in tqdm.tqdm(range(len(data))):
-        try:
-            data[i] = trans(data[i], augs)
-        except:
-            pass
-        if i in rands:
-            disp(data_orig[i], data[i], cl_num//2)
-            cl_num+=1
+    if(condition=="first"): #first condition
+        pass
+
+    elif(condition=="second"): #second condition
+        for i in tqdm.tqdm(range(len(data))):
+            try:
+                data[i] = trans(data[i], augs)
+            except:
+                pass
+            
+
+    elif(condition == "third"):
+        combine()
+        new_labels=np.load("/home/abhishek/django_project4/classification/model/new_labels.npy")
+        new_data = np.load("/home/abhishek/django_project4/classification/model/new_data.npy")
+        data=data.append(new_data)
+        labels=labels.append(new_labels)
+
+
+        for i in tqdm.tqdm(range(len(data))):
+            try:
+                data[i] = trans(data[i], augs)
+            except:
+                pass
+    elif(condition == "forth"):
+        combine()
+        new_labels=np.load("/home/abhishek/django_project4/classification/model/new_labels.npy")
+        new_data = np.load("/home/abhishek/django_project4/classification/model/new_data.npy")
+
+        for i in tqdm.tqdm(range(len(new_data))):
+            try:
+            
+                data[i] = trans(data[i], augs)
+
+            except:
+                pass
+
+        data=data.append(new_data)
+        labels=labels.append(new_labels)
+
+
 
     #%%
     #Randomize the order of the input images
@@ -189,8 +221,8 @@ def retrain(condition,augs = ['horizontal_shift','brightness','zoom']):
     #     data.append(np.array(size_image))
 
 
-    X_test=np.array(data)
-    X_test = X_test.astype('float32')/255
+    # X_test=np.array(data)
+    # X_test = X_test.astype('float32')/255
     #np.save('/home/abhishek/django_project4/classification/model/X_test.npy', X_test)
 
     pred = np.argmax(model.predict(X_test), axis = 1)

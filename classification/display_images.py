@@ -17,7 +17,7 @@ def display(condition,augs=['horizontal_shift','brightness','zoom']):   #give au
             im_random=random.choice(files)
             image=Image.open(path+i+"/"+im_random)
             im=cv2.imread(path+i+"/"+im_random)
-            os.chdir("/home/abhishek/django_project4/augmented_images/new_classes")
+            os.chdir("/home/abhishek/django_project4/classification/static/augmented_images/new_classes")
             n=i+".jpg"
             cv2.imwrite(n,im)
             a=trans(im,augs)
@@ -35,7 +35,7 @@ def display(condition,augs=['horizontal_shift','brightness','zoom']):   #give au
             im_random=random.choice(files)
             image=Image.open(path+i+"/"+im_random)
             im=cv2.imread(path+i+"/"+im_random)
-            os.chdir("/home/abhishek/django_project4/augmented_images/all_classes")
+            os.chdir("/home/abhishek/django_project4/classification/static/augmented_images/all_classes")
             n=i+".jpg"
             cv2.imwrite(n,im)
             a=trans(im,augs)
@@ -47,7 +47,7 @@ def display(condition,augs=['horizontal_shift','brightness','zoom']):   #give au
             im_random=random.choice(files)
             image=Image.open(path+j+"/"+im_random)
             im=cv2.imread(path+j+"/"+im_random)
-            os.chdir("/home/abhishek/django_project4/augmented_images/all_classes")
+            os.chdir("/home/abhishek/django_project4/classification/static/augmented_images/all_classes")
             n=j+".jpg"
             cv2.imwrite(n,im)
             a=trans(im,augs)

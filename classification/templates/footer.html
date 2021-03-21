@@ -2,13 +2,40 @@
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script>
 
+  $('.btn').click(function() {
+  var text = this.innerHTML; 
+
+  var itemFound = false; 
+  console.log("hello");
+  $('ul.justList div').each(function() {
+    console.log($(this).text())
+    if ($(this).text() === text) { 
+      itemFound = true;
+    }
+  });
+
+  if (!itemFound) {
+    $(this).removeClass('btn-primary')
+    $(this).addClass('btn-success')
+    $('<div>', {
+      html: text
+    },'</div>').addClass('alert alert-info').appendTo('ul.justList') 
+  } else { 
+    $(this).addClass('btn-primary')
+    $(this).removeClass('btn-success')
+    $(`ul.justList div:contains(${text})`).remove();
+  }
+});
+</script>
 <style>
 .footer {
   position: fixed;
-  left: 0;
   bottom: 0;
   width: 100%;
+  margin-top: 10%;
+  height: 5%;
   background-color: rgb(27, 27, 27);
   color: rgb(219, 219, 219);
   text-align: center;
