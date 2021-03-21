@@ -21,7 +21,7 @@ import tensorflow as tf
 from .augmentations import *
 from .retrain_model import *
 from .display_images import *
-
+from .plot import *
 from plotly.offline import plot
 from plotly.graph_objs import Scatter
 
@@ -81,6 +81,7 @@ def getpredictions(img):
     pred=loaded_model.predict(im)
     return pred
 
+
 def augment(request):
     return render(request,"augmentation.html")
 
@@ -110,11 +111,11 @@ def re_train_model(request):
     request.session['token'] ==1  #to be changed
     if(request.session['token'] ==1):
 
-
-        a,b=retrain(1,[])
-        plot_div = graphs(a,b)
+        acc,val_acc,loss,val_loss=retrain(1,[])
+        plotgraphs(4,acc,val_acc,loss,val_loss)
 
         return render(request,"graphs.html", context={'plot_div': plot_div})
+
 
     elif (request.session['token']== 2):
         return HttpResponse("its 2")

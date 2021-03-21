@@ -20,6 +20,9 @@ from keras.optimizers import Adam
 import matplotlib.pyplot as plt
 from sklearn.metrics import accuracy_score, confusion_matrix
 import os
+import plotly.graph_objects as go
+import plotly.express as px
+
 
 def disp(im1,im2,n,save=False):
     fig, axs = plt.subplots(1,2)
@@ -193,14 +196,24 @@ def retrain(condition,augs = ['horizontal_shift','brightness','zoom']):
     pred = np.argmax(model.predict(X_test), axis = 1)
 
 
-    # accuracy_score(y_test, pred)
-    # m = confusion_matrix(y_test, pred)
+
     # plt.matshow(m)
     # plt.title('accuracy = {}'.format(accuracy_score(y_test, pred)))
     # plt.show()
 
     model.save_weights('classification/model/ii_aug_no_dat.h5')
-    return history.history['val_accuracy'],history.history["accuracy"]
+
+
+
+    # accuracy_score(y_test, pred)
+    # m = confusion_matrix(y_test, pred)
+    # fig=px.imshow(m)
+
+    # fig.update_layout(title='accuracy = {}'.format(accuracy_score(y_test, pred)))
+    # with open('/home/abhishek/django_project4/classification/templates/graphs.html', 'a') as f:
+    #     f.write(fig.to_html(full_html=False, include_plotlyjs='cdn'))
+
+    return history.history['accuracy'],history.history['val_accuracy'],history.history['loss'],history.history['val_loss']
 
 
 
