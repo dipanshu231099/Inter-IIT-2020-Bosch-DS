@@ -29,10 +29,7 @@ def combine(augs):
                 size_image = image_from_array.resize((height, width))
                 data.append(np.array(size_image))
                 labels.append(i)
-                for augment in augs:
-                    img=getattr(ags, augment)(np.array(size_image))
-                    data.append(np.array(img))
-                    labels.append(i)
+
             except AttributeError:
                 print('N')
 
