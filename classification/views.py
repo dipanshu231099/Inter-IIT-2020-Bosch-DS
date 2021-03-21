@@ -81,13 +81,6 @@ def getpredictions(img):
     pred=loaded_model.predict(im)
     return pred
 
-def graphs(x_data,y_data):
-    plot_div = plot([Scatter(x=x_data, y=y_data,
-                        mode='lines', name='test',
-                        opacity=0.8, marker_color='green')],
-               output_type='div')
-    return plot_div
-
 def augment(request):
     return render(request,"augmentation.html")
 
@@ -114,7 +107,7 @@ def Merge(request):
 
 
 def re_train_model(request):
-    request.session['token'] ==1
+    request.session['token'] ==1  #to be changed
     if(request.session['token'] ==1):
 
 
@@ -122,10 +115,42 @@ def re_train_model(request):
         plot_div = graphs(a,b)
 
         return render(request,"graphs.html", context={'plot_div': plot_div})
+
     elif (request.session['token']== 2):
         return HttpResponse("its 2")
     else:
         return HttpResponse("hello world")
+
+def display_images(request):
+    request.session['token'] =1  #to be changed
+    if(request.session['token'] ==1):
+        images=[]
+        original="/home/abhishek/django_project4/classification/static/augmented_images/new_classes/original"
+        augmented="/home/abhishek/django_project4/classification/static/augmented_images/new_classes/augmented"
+        im1=os.listdir(original)
+        im2=os.listdir(augmented)
+        for i in range(0,len(im1)):
+            a=original+im1[i]
+            b=augmented+im2[i]
+            c=[a,b]
+            images.append(c)
+
+
+        return render(request,"dis_org_aug.html",context={'images':images})
+    else:
+        images=[]
+        original="/home/abhishek/django_project4/classification/static/augmented_images/all_classes/original"
+        augmented="/home/abhishek/django_project4/classification/static/augmented_images/all_classes/augmented"
+        im1=os.listdir(original)
+        im2=os.listdir(augmented)
+        for i in range(0,len(im1)):
+            a=original+im1[i]
+            b=augmented+im2[i]
+            c=[a,b]
+            images.append(c)
+
+
+        return render(request,"dis_org_aug.html",context={'images':images})
 
 def direct(request):
     return render(request,"retrain.html")
