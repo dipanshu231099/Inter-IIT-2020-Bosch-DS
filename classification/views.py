@@ -138,11 +138,10 @@ def display_images(request):
 
         return render(request,"dis_org_aug.html",context={'images':images})
     else:
-        images=[]
-        original="/home/abhishek/django_project4/classification/static/augmented_images/all_classes/original"
-        augmented="/home/abhishek/django_project4/classification/static/augmented_images/all_classes/augmented"
-        im1=os.listdir(original)
-        im2=os.listdir(augmented)
+        original="augmented_images/all_classes/original"
+        augmented="augmented_images/all_classes/augmented"
+        im1=os.listdir("/home/abhishek/django_project4/classification/static/augmented_images/new_classes/original")
+        im2=os.listdir("/home/abhishek/django_project4/classification/static/augmented_images/new_classes/augmented")
         for i in range(0,len(im1)):
             a=original+im1[i]
             b=augmented+im2[i]
