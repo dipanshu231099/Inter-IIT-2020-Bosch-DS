@@ -3,6 +3,7 @@ from django.http import HttpResponse
 import os
 from .forms import UploadTrainImage
 from .forms import UploadTestImage
+from .forms import Augmentations
 from PIL import Image
 from numpy import asarray
 import os
@@ -83,7 +84,10 @@ def getpredictions(img):
 
 
 def augment(request):
-    return render(request,"augmentation.html")
+    if request.method == "POST":
+        print(request.POST['augs'])
+    form = Augmentations()
+    return render(request,"augmentation.html",{'form':form})
 
 def Merge(request):
     if request.method == 'POST':

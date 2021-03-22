@@ -4,13 +4,26 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 <script>
 
-  $('.btn').click(function() {
-  var text = this.innerHTML; 
+  function getAllAugs() {
+    var augsTags = document.getElementsByClassName('justList')[0].children;
+    var augForm = document.getElementById('aug_form');
+    var inputBox = document.getElementsByName('augs')[0];
+    var augslist = []
 
-  var itemFound = false; 
-  console.log("hello");
+    for(var i=0;i<augsTags.length;i++) {
+      augslist.push(augsTags[i].textContent)
+    }
+
+    inputBox.value = augslist.join()
+    console.log(inputBox.value)
+    augForm.submit()
+    
+  }
+
+  $('.my-1').click(function() {
+  var text = this.innerHTML; 
+  var itemFound = false;
   $('ul.justList div').each(function() {
-    console.log($(this).text())
     if ($(this).text() === text) { 
       itemFound = true;
     }
@@ -21,8 +34,10 @@
     $(this).addClass('btn-success')
     $('<div>', {
       html: text
-    },'</div>').addClass('alert alert-info').appendTo('ul.justList') 
-  } else { 
+    },'</div>')
+    .addClass('alert alert-info')
+    .appendTo('ul.justList') 
+  } else {
     $(this).addClass('btn-primary')
     $(this).removeClass('btn-success')
     $(`ul.justList div:contains(${text})`).remove();
