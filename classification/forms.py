@@ -18,4 +18,6 @@ class UploadTestImage(forms.Form):
 
     testing_file = forms.FileField(widget=forms.ClearableFileInput())
 
+class Augmentations(forms.Form):
+    augs = forms.CharField(max_length=300,widget=forms.TextInput(attrs={'type':'hidden'}))
         
