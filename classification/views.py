@@ -107,7 +107,7 @@ def re_train_model(request):
         acc,val_acc,loss,val_loss=retrain("third",[])
         plotgraphs(4,acc,val_acc,loss,val_loss)
 
-        return render(request,"graphs.html", context={'plot_div': plot_div})
+        return render(request,"graphs.html")
 
 
     elif (request.session['token']== 2):

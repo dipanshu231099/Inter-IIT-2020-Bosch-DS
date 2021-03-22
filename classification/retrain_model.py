@@ -106,16 +106,18 @@ def retrain(condition,augs = ['horizontal_shift','brightness','zoom']):
                 data[i] = trans(data[i], augs)
             except:
                 pass
-            
+
 
     elif(condition == "third"):
         combine()
         new_labels=np.load("/home/abhishek/django_project4/classification/model/new_labels.npy")
         new_data = np.load("/home/abhishek/django_project4/classification/model/new_data.npy")
-        data=data.append(new_data)
-        labels=labels.append(new_labels)
-
-
+        data=np.concatenate((data,new_data),axis=0)
+        labels= np.concatenate((labels,new_labels),axis=0)
+        new_test_data=np.load("/home/abhishek/django_project4/classification/model/new_test_data.npy")
+        new_test_labels=np.load("/home/abhishek/django_project4/classification/model/new_test_labels.npy")
+        X_test = np.concatenate((X_test,new_test_data))
+        y_test = np.concatenate((y_test,new_test_labels))
         for i in tqdm.tqdm(range(len(data))):
             try:
                 data[i] = trans(data[i], augs)
@@ -123,19 +125,24 @@ def retrain(condition,augs = ['horizontal_shift','brightness','zoom']):
                 pass
     elif(condition == "forth"):
         combine()
+
         new_labels=np.load("/home/abhishek/django_project4/classification/model/new_labels.npy")
         new_data = np.load("/home/abhishek/django_project4/classification/model/new_data.npy")
+        new_test_data=np.load("/home/abhishek/django_project4/classification/model/new_test_data.npy")
+        new_test_labels=np.load("/home/abhishek/django_project4/classification/model/new_test_labels.npy")
+        X_test = np.concatenate((X_test,new_test_data))
+        y_test = np.concatenate((y_test,new_test_labels))
 
         for i in tqdm.tqdm(range(len(new_data))):
             try:
-            
+
                 data[i] = trans(data[i], augs)
 
             except:
                 pass
 
-        data=data.append(new_data)
-        labels=labels.append(new_labels)
+        data=np.concatenate((data,new_data),axis=0)
+        labels= np.concatenate((labels,new_labels),axis=0)
 
 
 
@@ -207,25 +214,14 @@ def retrain(condition,augs = ['horizontal_shift','brightness','zoom']):
     history = model.fit(X_train, y_train, batch_size=32, epochs=epochs,
     validation_data=(X_val, y_val))
 
-    # y_test=pd.read_csv("data/GT-final_test.csv", delimiter=';',)
-    # labels=y_test['Filename'].values
-    # y_test=y_test['ClassId'].values
-    # np.save('/home/abhishek/django_project4/classification/modely_test.npy', y_test)
-    # data=[]
 
 
-    # for f in tqdm.tqdm(labels):
-    #     image=cv2.imread('data/test/'+f)
-    #     image_from_array = Image.fromarray(image, 'RGB')
-    #     size_image = image_from_array.resize((height, width))
-    #     data.append(np.array(size_image))
 
 
-    # X_test=np.array(data)
-    # X_test = X_test.astype('float32')/255
-    #np.save('/home/abhishek/django_project4/classification/model/X_test.npy', X_test)
 
-    pred = np.argmax(model.predict(X_test), axis = 1)
+
+
+    pred = np.argmax(model.predict(test_data), axis = 1)
 
 
 
