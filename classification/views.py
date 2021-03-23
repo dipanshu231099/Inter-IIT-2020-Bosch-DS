@@ -54,14 +54,17 @@ def addTrainingImage(request):
                 if(request.POST.get("augmentation")=='yes'):
                     return HttpResponse("done")
                 else:
-                    return HttpResponse("Succesful")
+                    return HttpResponse("Succesfully added the image")
             else:
                 form = UploadTrainImage()
                 form1 = UploadTestImage()
     return render(request, 'addTrainingImage.html', {'form':form,'form1':form1})
 
 def trainImageHandler(fname, img, class_name):
-    with open('train/'+class_name+'/'+str(fname)+'.jpeg','wb+') as destination:
+    extension = str(fname).split('.')[-1]
+    if extension not in ('jpeg','png','jpg'):
+        return;
+    with open('User_Custom_Train/'+class_name+'/'+str(fname),'wb+') as destination:
         print("I am called")
         for chunk in img.chunks():
             destination.write(chunk)
@@ -193,21 +196,15 @@ def display_images(request):
 def direct(request):
     if request.method == 'POST':
         if request.POST.get('c1')=="1":
-
-
             request.session['token'] = 1
             return redirect("/app/retrain/")
-
         elif request.POST.get('c1')=="2":
-
             request.session['token'] = 2
             return redirect("/app/augment/")
-
         elif request.POST.get('c1')=="3":
-            return redirect("/app/")
+            return redirect("/app/AddTrainImage/")
         elif request.POST.get('c1')=="4":
             return redirect("/app/")
-
     return render(request,"home.html")
 
 

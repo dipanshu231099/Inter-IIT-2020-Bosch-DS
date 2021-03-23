@@ -5,10 +5,12 @@
 <body>
     <form method='post'>
          {% csrf_token %}
-    <button type="submit"  value="1" name ="c1" class="btn btn-primary">Retrain the Original Model and see its statics</button>
-    <button type="submit" value="2" name ="c1" class="btn btn-primary">Add augmentations and then retrain the original model</button>
-    <button type="submit"  value="3" name ="c1" class="btn btn-primary">Add Classes and the retrain is you want to</button>
-    <button type="submit" value="4" name ="c1" class="btn btn-primary">Test the original model by giving it some image</button>
+    <div class='container text-center'>
+    <button type="submit"  value="1" name ="c1" class="btn btn-primary w-100 m-1 ">Retrain the Original Model and see its statics</button>
+    <button type="submit" value="2" name ="c1" class="btn btn-primary w-100 m-1">Add augmentations and then retrain the original model</button>
+    <button type="submit"  value="3" name ="c1" class="btn btn-primary w-100 m-1">Add Images to classes and retrain</button>
+    <button type="submit" value="4" name ="c1" class="btn btn-primary w-100 m-1">Test the original model by giving it some image</button>
+    </div>
 </form>
 
 </body>
