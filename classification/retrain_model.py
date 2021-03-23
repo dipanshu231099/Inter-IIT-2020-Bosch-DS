@@ -229,7 +229,7 @@ def retrain(condition,augs):
     # plt.title('accuracy = {}'.format(accuracy_score(y_test, pred)))
     # plt.show()
 
-    model.save_weights('classification/model/ii_aug_no_dat.h5')
+    #model.save_weights('classification/model/ii_aug_no_dat.h5')   #give correct path to save the model
 
 
 
