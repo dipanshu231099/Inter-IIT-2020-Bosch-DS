@@ -5,16 +5,22 @@
     <div class="container">
         <h1>Add new image to database</h1>
         <p>
-            Add a new image by selecting the "Img file". select the class to which the image needs to be added. Finally click on "Upload" button.
+            Add one or more new images by selecting the "Img file". select the class to which the image needs to be added. Finally click on "Upload" button.
         </p>
         <hr>
+        
         <form method = "post" enctype="multipart/form-data"> 
             {% csrf_token %} 
             {{form.as_p}}
-            <button type="submit" class="btn btn-primary">Upload</button>
-            <button type="submit" value='yes' name ="augmentation" class="btn btn-primary">Upload and specify augmentations</button> 
+            <b style='color: red;'>(Only files with extensions .jpg .jpeg .png will be uploaded other images will be ignored !)</b>
+            <br>
+            <button type="submit" class="btn btn-primary w-50 m-1">Upload</button>
+            <br>
+            <button type="submit" value='yes' name ="augmentation" class="btn btn-primary w-50 m-1">Upload and specify augmentations</button> 
         </form>
+        
 
+        <hr>
 
         <h1>Give us an image to test :) </h1>
         <label> Add an single jpeg image to test and we will try to pridict its class</label>
