@@ -34,7 +34,7 @@ def disp(im1,im2,n,save=False):
     plt.show()
     plt.savefig('class_{}_aug.jpg'.format(n))
 
-def retrain(condition,augs = ['horizontal_shift','brightness','zoom']):
+def retrain(condition,augs):
 
     #Original data is in a data.npy file and the new images are in train folder
     #condition (first) - retrain data.npy without any augments
@@ -59,7 +59,7 @@ def retrain(condition,augs = ['horizontal_shift','brightness','zoom']):
             'brightness',
             'zoom',
             'channel_shift',
-            'horizontal_fl0ip',
+            'horizontal_flip',
             'vertical_flip',
             'rotation',
             'convolution',
@@ -94,8 +94,8 @@ def retrain(condition,augs = ['horizontal_shift','brightness','zoom']):
     cl_num = 0
     labels = np.load('/home/abhishek/django_project4/classification/model/labels.npy', allow_pickle=True)
     data= np.load('/home/abhishek/django_project4/classification/model/data.npy', allow_pickle=True)
-    test_data=np.load("classification/model/X_test.npy")
-    test_labels=np.load("classification/model/y_test.npy")
+    test_data=np.load("/home/abhishek/django_project4/classification/model/X_test.npy")
+    test_labels=np.load("/home/abhishek/django_project4/classification/model/y_test.npy")
 
     if(condition=="first"): #first condition
         pass
@@ -242,7 +242,6 @@ def retrain(condition,augs = ['horizontal_shift','brightness','zoom']):
     #     f.write(fig.to_html(full_html=False, include_plotlyjs='cdn'))
 
     return history.history['accuracy'],history.history['val_accuracy'],history.history['loss'],history.history['val_loss']
-
 
 
 

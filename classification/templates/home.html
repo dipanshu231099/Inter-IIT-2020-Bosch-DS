@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<body>
+    <form method='post'>
+         {% csrf_token %}
+    <button type="submit"  value="1" name ="c1" class="btn btn-primary">Retrain the Original Model and see its statics</button>
+    <button type="submit" value="2" name ="c1" class="btn btn-primary">Add augmentations and then retrain the original model</button>
+    <button type="submit"  value="3" name ="c1" class="btn btn-primary">Add Classes and the retrain is you want to</button>
+    <button type="submit" value="4" name ="c1" class="btn btn-primary">Test the original model by giving it some image</button>
+</form>
+
+</body>
+{% endblock content %}

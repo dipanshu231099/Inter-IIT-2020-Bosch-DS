@@ -52,7 +52,7 @@ def addTrainingImage(request):
                     print(fname)
                     trainImageHandler(fname, fname, request.POST['class_name'])
                 if(request.POST.get("augmentation")=='yes'):
-                    return HttpResponse("aaaaaaaaaaaaaaa")
+                    return HttpResponse("done")
                 else:
                     return HttpResponse("Succesful")
             else:
@@ -84,8 +84,21 @@ def getpredictions(img):
 
 
 def augment(request):
+
+    request.session['augs']=""
     if request.method == "POST":
-        print(request.POST['augs'])
+
+        request.session['augs']=request.POST.get('augs')
+        if  request.session['token'] == 3:
+            display("first",list(request.session['augs'].split(',')))
+        elif request.session['token'] == 4:
+            display("second",list(request.session['augs'].split(',')))
+        elif(request.session['token'] == 2):
+            #display("third",['rotation','vertical_flip'])
+            display("third",list(request.session['augs'].split(',')))
+
+
+        return redirect("/app/image/")
     form = Augmentations()
     return render(request,"augmentation.html",{'form':form})
 
@@ -93,49 +106,79 @@ def Merge(request):
     if request.method == 'POST':
         if request.POST.get('aug1')=="first":
 
-            display("first",[])
-            request.session['token'] = 1
-            return redirect("/app/dis_org_aug/")
+
+            request.session['token'] = 3
+            return redirect("/app/augment/")
 
         if request.POST.get('aug1')=="Second":
             display("second",[])
-            request.session['token'] = 2
-            return redirect("/dis_org_aug/")
+            request.session['token'] = 4
+            return redirect("app/augment/")
 
     return render (request,"Merge_or_not.html")
 
 def re_train_model(request):
-    request.session['token'] ==1  #to be changed
+
     if(request.session['token'] ==1):
-
-        acc,val_acc,loss,val_loss=retrain("third",[])
+        acc,val_acc,loss,val_loss=retrain("first",list(request.session['augs'].split(",")))
         plotgraphs(4,acc,val_acc,loss,val_loss)
+        request.session['token'] == 0
+        return render(request,"graphs.html")
 
+    elif(request.session['token']==2):
+        acc,val_acc,loss,val_loss=retrain("second",list(request.session['augs'].split(",")))
+        plotgraphs(4,acc,val_acc,loss,val_loss)
+        request.session['token'] == 0
+        return render(request,"graphs.html")
+
+    elif(request.session['token'] ==3):
+
+        acc,val_acc,loss,val_loss=retrain("third",list(request.session['augs'].split(",")))
+        plotgraphs(4,acc,val_acc,loss,val_loss)
+        request.session['token'] == 0
         return render(request,"graphs.html")
 
 
-    elif (request.session['token']== 2):
-        return HttpResponse("its 2")
+    elif (request.session['token']== 4):
+
+        acc,val_acc,loss,val_loss=retrain("forth",list(request.session['augs'].split(",")))
+        plotgraphs(4,acc,val_acc,loss,val_loss)
+        request.session['token'] == 0
+        return render(request,"graphs.html")
+
     else:
         return HttpResponse("hello world")
 
 def display_images(request):
-    request.session['token'] =1  #to be changed
-    if(request.session['token'] ==1):
+
+    if(request.session['token'] == 2):
         images=[]
-        original="augmented_images/new_classes/original"
-        augmented="augmented_images/new_classes/augmented"
-        im1=os.listdir("/home/abhishek/django_project4/classification/static/augmented_images/new_classes/original")
-        im2=os.listdir("/home/abhishek/django_project4/classification/static/augmented_images/new_classes/augmented")
+        original="augmented_images/Orig_classes/original"
+        augmented="augmented_images/Orig_classes/augmented"
+        im1=os.listdir("/home/abhishek/django_project4/classification/static/augmented_images/Orig_classes/original")
+        im2=os.listdir("/home/abhishek/django_project4/classification/static/augmented_images/Orig_classes/augmented")
         for i in range(0,len(im1)):
             a=original+'/'+im1[i]
             b=augmented+'/'+im2[i]
             c=[a,im1[i],b,im2[i]]
             images.append(c)
         return render(request,"dis_org_aug.html",context={'images':images})
-    else:
+
+    elif(request.session['token'] == 3):
         original="augmented_images/all_classes/original"
         augmented="augmented_images/all_classes/augmented"
+        im1=os.listdir("/home/abhishek/django_project4/classification/static/augmented_images/all_classes/original")
+        im2=os.listdir("/home/abhishek/django_project4/classification/static/augmented_images/all_classes/augmented")
+        for i in range(0,len(im1)):
+            a=original+im1[i]
+            b=augmented+im2[i]
+            c=[a,im1[i],b,im2[i]]
+            images.append(c)
+
+    elif(request.session['token'] == 4):
+
+        original="augmented_images/new_classes/original"
+        augmented="augmented_images/new_classes/augmented"
         im1=os.listdir("/home/abhishek/django_project4/classification/static/augmented_images/new_classes/original")
         im2=os.listdir("/home/abhishek/django_project4/classification/static/augmented_images/new_classes/augmented")
         for i in range(0,len(im1)):
@@ -148,4 +191,21 @@ def display_images(request):
         return render(request,"dis_org_aug.html",context={'images':images})
 
 def direct(request):
-    return render(request,"retrain.html")
+    if request.method == 'POST':
+        if request.POST.get('c1')=="1":
+
+
+            request.session['token'] = 1
+            return redirect("/app/retrain/")
+
+        elif request.POST.get('c1')=="2":
+
+            request.session['token'] = 2
+            return redirect("/app/augment/")
+
+        elif request.POST.get('c1')=="3":
+            return redirect("/app/")
+        elif request.POST.get('c1')=="4":
+            return redirect("/app/")
+
+    return render(request,"home.html")
