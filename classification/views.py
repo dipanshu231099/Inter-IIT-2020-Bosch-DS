@@ -120,29 +120,29 @@ def Merge(request):
 def re_train_model(request):
 
     if(request.session['token'] ==1):
-        acc,val_acc,loss,val_loss=retrain("first",list(request.session['augs'].split(",")))
-        plotgraphs(4,acc,val_acc,loss,val_loss)
+        acc,val_acc,loss,val_loss,m,accu_score=retrain("first",list(request.session['augs'].split(",")))
+        plotgraphs(4,acc,val_acc,loss,val_loss,m,accu_score)
         request.session['token'] == 0
         return render(request,"graphs.html")
 
     elif(request.session['token']==2):
-        acc,val_acc,loss,val_loss=retrain("second",list(request.session['augs'].split(",")))
-        plotgraphs(4,acc,val_acc,loss,val_loss)
+        acc,val_acc,loss,val_loss,m,accu_score=retrain("second",list(request.session['augs'].split(",")))
+        plotgraphs(4,acc,val_acc,loss,val_loss,m,accu_score)
         request.session['token'] == 0
         return render(request,"graphs.html")
 
     elif(request.session['token'] ==3):
 
-        acc,val_acc,loss,val_loss=retrain("third",list(request.session['augs'].split(",")))
-        plotgraphs(4,acc,val_acc,loss,val_loss)
+        acc,val_acc,loss,val_loss,m,accu_score=retrain("third",list(request.session['augs'].split(",")))
+        plotgraphs(4,acc,val_acc,loss,val_loss,m,accu_score)
         request.session['token'] == 0
         return render(request,"graphs.html")
 
 
     elif (request.session['token']== 4):
 
-        acc,val_acc,loss,val_loss=retrain("forth",list(request.session['augs'].split(",")))
-        plotgraphs(4,acc,val_acc,loss,val_loss)
+        acc,val_acc,loss,val_loss,m,accu_score=retrain("forth",list(request.session['augs'].split(",")))
+        plotgraphs(4,acc,val_acc,loss,val_loss,m,accu_score)
         request.session['token'] == 0
         return render(request,"graphs.html")
 
@@ -209,3 +209,7 @@ def direct(request):
             return redirect("/app/")
 
     return render(request,"home.html")
+
+
+def graphs(request):
+    return render(request,"graphs.html")

@@ -233,15 +233,11 @@ def retrain(condition,augs):
 
 
 
-    # accuracy_score(y_test, pred)
-    # m = confusion_matrix(y_test, pred)
-    # fig=px.imshow(m)
+    accu_score=accuracy_score(test_labels,pred)
+    m = confusion_matrix(test_labels, pred)
 
-    # fig.update_layout(title='accuracy = {}'.format(accuracy_score(y_test, pred)))
-    # with open('/home/abhishek/django_project4/classification/templates/graphs.html', 'a') as f:
-    #     f.write(fig.to_html(full_html=False, include_plotlyjs='cdn'))
 
-    return history.history['accuracy'],history.history['val_accuracy'],history.history['loss'],history.history['val_loss']
+    return history.history['accuracy'],history.history['val_accuracy'],history.history['loss'],history.history['val_loss'],m,accu_score
 
 
 
