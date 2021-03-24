@@ -2,6 +2,9 @@ import os
 import numpy as np
 import cv2
 from PIL import Image
+
+base_dir = os.getcwd()
+
 def num(i):
     i = str(i)
     return '0'*(5-len(i))+i
@@ -17,7 +20,7 @@ def combine():
     classes = 43
     n_inputs = height * width*channels
 
-    p="/home/abhishek/django_project4/User_Custom_Train"
+    p=base_dir+"/User_Custom_Train"
     l=os.listdir(p)
     n_classes=len(l)
     Classes=sorted(l)
@@ -25,7 +28,7 @@ def combine():
 
     for i in new_classes:
         #path = "D:/Bosch/GTSRB_Final_Training_Images/GTSRB/Final_Training/Images/{0}/".format(num(i))
-        path = "/home/abhishek/django_project4/train/{}".format(i)
+        path = base_dir+"/train/{}".format(i)
         #print(path)
         if os.path.exists(path):
           Class=os.listdir(path)
@@ -53,8 +56,8 @@ def combine():
     test_data=data.astype('float32')/255
 
 
-    np.save('/home/abhishek/django_project4/classification/model/new_data.npy', data) # save
-    np.save('/home/abhishek/django_project4/classification/model/new_labels.npy', labels) # save
-    np.save('/home/abhishek/django_project4/classification/model/new_test_labels.npy', test_labels)
-    np.save('/home/abhishek/django_project4/classification/model/new_test_labels.npy', test_data)
+    np.save(base_dir+'/classification/model/new_data.npy', data) # save
+    np.save(base_dir+'/classification/model/new_labels.npy', labels) # save
+    np.save(base_dir+'/classification/model/new_test_labels.npy', test_labels)
+    np.save(base_dir+'/classification/model/new_test_labels.npy', test_data)
 #also make test files
