@@ -7,9 +7,9 @@ from .forms import Augmentations
 from PIL import Image
 from numpy import asarray
 import os
-from keras.models import Sequential
-from keras.layers import Dense
-from keras.models import model_from_json
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense
+from tensorflow.keras.models import model_from_json
 import cv2
 from django.core.files.storage import default_storage
 from keras.preprocessing.image import load_img
@@ -23,6 +23,10 @@ from .augmentations import *
 from .retrain_model import *
 from .display_images import *
 from .plot import *
+from .plot_ma import *
+
+
+
 from plotly.offline import plot
 from plotly.graph_objs import Scatter
 
@@ -123,20 +127,20 @@ def Merge(request):
 def re_train_model(request):
 
     if(request.session['token'] ==1):
-        acc,val_acc,loss,val_loss,m,accu_score=retrain("first",list(request.session['augs'].split(",")))
+        acc,val_acc,loss,val_loss,m,accu_score=retrain("first",list(request.session['augs'].split(",")),43)
         plotgraphs(4,acc,val_acc,loss,val_loss,m,accu_score)
         request.session['token'] == 0
         return render(request,"graphs.html")
 
     elif(request.session['token']==2):
-        acc,val_acc,loss,val_loss,m,accu_score=retrain("second",list(request.session['augs'].split(",")))
+        acc,val_acc,loss,val_loss,m,accu_score=retrain("second",list(request.session['augs'].split(",")),43)
         plotgraphs(4,acc,val_acc,loss,val_loss,m,accu_score)
         request.session['token'] == 0
         return render(request,"graphs.html")
 
     elif(request.session['token'] ==3):
 
-        acc,val_acc,loss,val_loss,m,accu_score=retrain("third",list(request.session['augs'].split(",")))
+        acc,val_acc,loss,val_loss,m,accu_score=retrain("third",list(request.session['augs'].split(",")),48)
         plotgraphs(4,acc,val_acc,loss,val_loss,m,accu_score)
         request.session['token'] == 0
         return render(request,"graphs.html")
@@ -144,7 +148,7 @@ def re_train_model(request):
 
     elif (request.session['token']== 4):
 
-        acc,val_acc,loss,val_loss,m,accu_score=retrain("forth",list(request.session['augs'].split(",")))
+        acc,val_acc,loss,val_loss,m,accu_score=retrain("forth",list(request.session['augs'].split(",")),48)
         plotgraphs(4,acc,val_acc,loss,val_loss,m,accu_score)
         request.session['token'] == 0
         return render(request,"graphs.html")
@@ -158,8 +162,9 @@ def display_images(request):
         images=[]
         original="augmented_images/Orig_classes/original"
         augmented="augmented_images/Orig_classes/augmented"
-        im1=os.listdir("/home/abhishek/django_project4/classification/static/augmented_images/Orig_classes/original")
-        im2=os.listdir("/home/abhishek/django_project4/classification/static/augmented_images/Orig_classes/augmented")
+        im1=sorted(os.listdir("/home/abhishek/django_project4/classification/static/augmented_images/Orig_classes/original"))
+
+        im2=sorted(os.listdir("/home/abhishek/django_project4/classification/static/augmented_images/Orig_classes/augmented"))
         for i in range(0,len(im1)):
             a=original+'/'+im1[i]
             b=augmented+'/'+im2[i]
@@ -170,8 +175,8 @@ def display_images(request):
     elif(request.session['token'] == 3):
         original="augmented_images/all_classes/original"
         augmented="augmented_images/all_classes/augmented"
-        im1=os.listdir("/home/abhishek/django_project4/classification/static/augmented_images/all_classes/original")
-        im2=os.listdir("/home/abhishek/django_project4/classification/static/augmented_images/all_classes/augmented")
+        im1=sorted(os.listdir("/home/abhishek/django_project4/classification/static/augmented_images/all_classes/original"))
+        im2=sorted(os.listdir("/home/abhishek/django_project4/classification/static/augmented_images/all_classes/augmented"))
         for i in range(0,len(im1)):
             a=original+im1[i]
             b=augmented+im2[i]
@@ -182,8 +187,8 @@ def display_images(request):
 
         original="augmented_images/new_classes/original"
         augmented="augmented_images/new_classes/augmented"
-        im1=os.listdir("/home/abhishek/django_project4/classification/static/augmented_images/new_classes/original")
-        im2=os.listdir("/home/abhishek/django_project4/classification/static/augmented_images/new_classes/augmented")
+        im1=sorted(os.listdir("/home/abhishek/django_project4/classification/static/augmented_images/new_classes/original"))
+        im2=sorted(os.listdir("/home/abhishek/django_project4/classification/static/augmented_images/new_classes/augmented"))
         for i in range(0,len(im1)):
             a=original+im1[i]
             b=augmented+im2[i]
@@ -210,3 +215,6 @@ def direct(request):
 
 def graphs(request):
     return render(request,"graphs.html")
+
+def analysis_model(request):
+    investigate("/home/abhishek/django_project4/classification/model/new_model.h5")

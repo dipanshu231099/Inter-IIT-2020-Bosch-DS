@@ -17,13 +17,15 @@ def combine():
     classes = 43
     n_inputs = height * width*channels
 
+    p="/home/abhishek/django_project4/User_Custom_Train"
+    l=os.listdir(p)
+    n_classes=len(l)
+    Classes=sorted(l)
+    new_classes=Classes[43:n_classes]
 
-    n_classes=len(os.listdir("/home/abhishek/django_project4/train"))
-    Classes=range(1,n_classes+1)
-
-    for i in Classes:
+    for i in new_classes:
         #path = "D:/Bosch/GTSRB_Final_Training_Images/GTSRB/Final_Training/Images/{0}/".format(num(i))
-        path = "/home/abhishek/django_project4/train/class{}".format(i)
+        path = "/home/abhishek/django_project4/train/{}".format(i)
         #print(path)
         if os.path.exists(path):
           Class=os.listdir(path)

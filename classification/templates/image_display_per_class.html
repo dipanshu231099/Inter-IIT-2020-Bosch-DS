@@ -2,7 +2,8 @@
 
 <div class="container" style="text-align: center;">
 
-
+    <button>
+        <a class="nav-link" href="{% url 'retrainingdata' %}">Retrain the Model</a> </button>
     {% for image_orig, orig_name, image_new, new_name in images %}
     <div class='row' style="border: 1px solid black; margin: 5%; border-radius: 5px; padding: 2%;">
         <div class='col-sm-5'>

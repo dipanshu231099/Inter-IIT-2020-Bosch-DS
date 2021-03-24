@@ -12,3 +12,10 @@ classification/model/new_data.npy
 classification/model/new_labels.npy
 classification/model/X_test.npy
 classification/model/y_test.npy
+classification/model/new_model.h5
+
+train/*
+User_Custom_Train/*
+HP-STSE.wiki/
+classification/static/augmented_images/Orig_classes/original/*
+classification/static/augmented_images/Orig_classes/augmented/*

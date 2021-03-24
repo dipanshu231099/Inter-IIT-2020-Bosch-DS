@@ -1,13 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Append </title>
-</head>
+{% extends 'base.html' %}
+
+{% block content %}
+
 
  <body>
+
+    <button>
+        <a class="nav-link" href="{% url 'analysis' %}">XAI analysis</a> </button>
   <h1>
    Original Graph Statictics
   </h1>
@@ -16,5 +15,11 @@
    Retrained Graph Statictics
     {%include "temp_graphs.html" %}
   </h1>
+
+
+
+
+
 </body>
-</html>
+
+{% endblock content %}

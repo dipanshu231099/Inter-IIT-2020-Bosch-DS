@@ -12,11 +12,9 @@ import random
 from .augmentations import *
 import tqdm
 tf.get_logger().setLevel(logging.ERROR)
-from keras.models import Sequential
-from keras.layers import Conv2D, MaxPool2D, Dense, Flatten, Dropout
-from keras.callbacks import EarlyStopping, ModelCheckpoint, ReduceLROnPlateau
-from keras.optimizers.schedules import ExponentialDecay
-from keras.optimizers import Adam
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Conv2D, MaxPool2D, Dense, Flatten, Dropout
+
 import matplotlib.pyplot as plt
 from sklearn.metrics import accuracy_score, confusion_matrix
 import os
@@ -34,7 +32,7 @@ def disp(im1,im2,n,save=False):
     plt.show()
     plt.savefig('class_{}_aug.jpg'.format(n))
 
-def retrain(condition,augs):
+def retrain(condition,augs,classes):
 
     #Original data is in a data.npy file and the new images are in train folder
     #condition (first) - retrain data.npy without any augments
@@ -49,7 +47,7 @@ def retrain(condition,augs):
     height = 32
     width = 32
     channels = 3
-    classes = 43
+    #classes = 43
     n_inputs = height * width*channels
 
     #%%
@@ -96,17 +94,18 @@ def retrain(condition,augs):
     data= np.load('/home/abhishek/django_project4/classification/model/data.npy', allow_pickle=True)
     test_data=np.load("/home/abhishek/django_project4/classification/model/X_test.npy")
     test_labels=np.load("/home/abhishek/django_project4/classification/model/y_test.npy")
-
+    data2=[]
     if(condition=="first"): #first condition
         pass
 
     elif(condition=="second"): #second condition
         for i in tqdm.tqdm(range(len(data))):
             try:
-                data[i] = trans(data[i], augs)
+                temp= trans(data[i], augs)
+                data2.append(temp)
             except:
                 pass
-
+        data=np.concatenate((data,data2))
 
     elif(condition == "third"):
         combine()
@@ -120,9 +119,12 @@ def retrain(condition,augs):
         y_test = np.concatenate((y_test,new_test_labels))
         for i in tqdm.tqdm(range(len(data))):
             try:
-                data[i] = trans(data[i], augs)
+                temp= trans(data[i], augs)
+                data2.append(temp)
             except:
                 pass
+        data=np.concatenate((data,data2))
+
     elif(condition == "forth"):
         combine()
 
@@ -136,11 +138,11 @@ def retrain(condition,augs):
         for i in tqdm.tqdm(range(len(new_data))):
             try:
 
-                data[i] = trans(data[i], augs)
-
+                temp= trans(new_data[i], augs)
+                data2.append(temp)
             except:
                 pass
-
+        new_data=np.concatenate((new_data,data2))
         data=np.concatenate((data,new_data),axis=0)
         labels= np.concatenate((labels,new_labels),axis=0)
 
@@ -151,7 +153,7 @@ def retrain(condition,augs):
     Cells=np.array(data)
     labels=np.array(labels)
     s=np.arange(Cells.shape[0])
-    np.random.seed(43)
+    np.random.seed(classes)
     np.random.shuffle(s)
     Cells=Cells[s]
     labels=labels[s]
@@ -164,8 +166,8 @@ def retrain(condition,augs):
 
     #Using one hote encoding for the train and validation labels
     from keras.utils import to_categorical
-    y_train = to_categorical(y_train, 43)
-    y_val = to_categorical(y_val, 43)
+    y_train = to_categorical(y_train, classes)
+    y_val = to_categorical(y_val, classes)
 
 
 
@@ -180,7 +182,7 @@ def retrain(condition,augs):
     model.add(Flatten())
     model.add(Dense(256, activation='relu'))
     model.add(Dropout(rate=0.5))
-    model.add(Dense(43, activation='softmax'))
+    model.add(Dense(classes, activation='softmax'))
     '''
     lr_schedule = ExponentialDecay(
     initial_learning_rate=1e-2,
@@ -207,7 +209,9 @@ def retrain(condition,augs):
     )
     earlystopper = EarlyStopping(patience=5, verbose=1)
     checkpointer = ModelCheckpoint('model--1-ii.h5', verbose=1, save_best_only=True)
+
     '''
+    model.save("/home/abhishek/django_project4/classification/model/new_model.h5")
     model.summary()
 
     epochs = 3
