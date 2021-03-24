@@ -5,6 +5,7 @@ from . import views
 urlpatterns = [
     path('',lambda request: redirect('home/', permanent=False)),
     path('AddTrainImage/', views.addTrainingImage, name='addTrainingImage'),
+    path('testImage/', views.testImage, name='testImage'),
     path('graphs/', views.graphs, name='plotly_graghs'),
     path('augment/', views.augment, name='augmentInput'),
     path('retrain/', views.re_train_model, name='retrainingdata'),

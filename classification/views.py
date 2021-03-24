@@ -30,10 +30,19 @@ from .plot_ma import *
 from plotly.offline import plot
 from plotly.graph_objs import Scatter
 
+base_dir = os.getcwd()
 
-
-def index(request):
-    None
+def testImage(request):
+    form1 = UploadTestImage()
+    if request.method == 'POST':
+        form1 = UploadTestImage(request.POST, request.FILES)
+        image = request.FILES['testing_file']
+        if form1.is_valid():
+            pred=getpredictions(image)
+            return HttpResponse(pred)
+        else:
+            form1 = UploadTestImage()
+    return render(request, 'testImage.html', {'form1':form1})
 
 def addTrainingImage(request):
     form = UploadTrainImage()
@@ -62,7 +71,7 @@ def addTrainingImage(request):
             else:
                 form = UploadTrainImage()
                 form1 = UploadTestImage()
-    return render(request, 'addTrainingImage.html', {'form':form,'form1':form1})
+    return render(request, 'addTrainingImage.html', {'form':form})
 
 def trainImageHandler(fname, img, class_name):
     extension = str(fname).split('.')[-1]
@@ -74,18 +83,18 @@ def trainImageHandler(fname, img, class_name):
             destination.write(chunk)
 
 def getpredictions(img):
-    with open('temp/ok.jpeg','wb+') as destination:
+    with open(base_dir+'/temp/ok.jpeg','wb+') as destination:
         for chunk in img.chunks():
             destination.write(chunk)
     img_array=cv2.imread('temp/ok.jpeg')
     im=img_array.astype('float32')/255
     im = cv2.resize(img_array, (32, 32), cv2.INTER_CUBIC)
     im=np.resize(im,(1,32,32,3))
-    json_file=open('/home/abhishek/django_project4/classification/model/ii_using_sigmoid.json','r')
+    json_file=open(base_dir+'/classification/model/ii_using_sigmoid.json','r')
     loaded_model_json=json_file.read()
     json_file.close()
     loaded_model=model_from_json(loaded_model_json)
-    loaded_model.load_weights("/home/abhishek/django_project4/classification/model/ii_using_sigmoid.h5")
+    loaded_model.load_weights(base_dir+'/classification/model/ii_using_sigmoid.h5')
     pred=loaded_model.predict(im)
     return pred
 
@@ -162,9 +171,8 @@ def display_images(request):
         images=[]
         original="augmented_images/Orig_classes/original"
         augmented="augmented_images/Orig_classes/augmented"
-        im1=sorted(os.listdir("/home/abhishek/django_project4/classification/static/augmented_images/Orig_classes/original"))
-
-        im2=sorted(os.listdir("/home/abhishek/django_project4/classification/static/augmented_images/Orig_classes/augmented"))
+        im1=sorted(os.listdir(base_dir+'/classification/static/augmented_images/Orig_classes/original'))
+        im2=sorted(os.listdir(base_dir+'/classification/static/augmented_images/Orig_classes/augmented'))
         for i in range(0,len(im1)):
             a=original+'/'+im1[i]
             b=augmented+'/'+im2[i]
@@ -175,8 +183,8 @@ def display_images(request):
     elif(request.session['token'] == 3):
         original="augmented_images/all_classes/original"
         augmented="augmented_images/all_classes/augmented"
-        im1=sorted(os.listdir("/home/abhishek/django_project4/classification/static/augmented_images/all_classes/original"))
-        im2=sorted(os.listdir("/home/abhishek/django_project4/classification/static/augmented_images/all_classes/augmented"))
+        im1=sorted(os.listdir(base_dir+'/classification/static/augmented_images/all_classes/original'))
+        im2=sorted(os.listdir(base_dir+'/classification/static/augmented_images/all_classes/augmented'))
         for i in range(0,len(im1)):
             a=original+im1[i]
             b=augmented+im2[i]
@@ -187,8 +195,8 @@ def display_images(request):
 
         original="augmented_images/new_classes/original"
         augmented="augmented_images/new_classes/augmented"
-        im1=sorted(os.listdir("/home/abhishek/django_project4/classification/static/augmented_images/new_classes/original"))
-        im2=sorted(os.listdir("/home/abhishek/django_project4/classification/static/augmented_images/new_classes/augmented"))
+        im1=sorted(os.listdir(base_dir+'/classification/static/augmented_images/new_classes/original'))
+        im2=sorted(os.listdir(base_dir+'/classification/static/augmented_images/new_classes/augmented'))
         for i in range(0,len(im1)):
             a=original+im1[i]
             b=augmented+im2[i]
@@ -199,6 +207,21 @@ def display_images(request):
         return render(request,"dis_org_aug.html",context={'images':images})
 
 def direct(request):
+    path=base_dir+"/User_Custom_Train/"
+    sign_class=os.listdir(path)
+    n_classes=len(sign_class)
+    sign_class1=sorted(sign_class)
+    removeable_files = []
+    for i in sign_class1:
+        files=os.listdir(path+i)
+        for j in files:
+            extension = j.split('.')[-1].lower()
+            if extension == 'csv':
+                removeable_files.append(path+i+'/'+j)
+    for i in removeable_files:
+        print("removing",i)
+        os.remove(i)
+
     if request.method == 'POST':
         if request.POST.get('c1')=="1":
             request.session['token'] = 1
@@ -209,7 +232,7 @@ def direct(request):
         elif request.POST.get('c1')=="3":
             return redirect("/app/AddTrainImage/")
         elif request.POST.get('c1')=="4":
-            return redirect("/app/")
+            return redirect("/app/testImage")
     return render(request,"home.html")
 
 
@@ -217,4 +240,4 @@ def graphs(request):
     return render(request,"graphs.html")
 
 def analysis_model(request):
-    investigate("/home/abhishek/django_project4/classification/model/new_model.h5")
+    investigate(base_dir+'/classification/model/new_model.h5')

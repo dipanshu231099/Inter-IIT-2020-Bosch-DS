@@ -22,6 +22,8 @@ import plotly.graph_objects as go
 import plotly.express as px
 from .make_npyfiles import *
 
+base_dir = os.getcwd()
+
 def disp(im1,im2,n,save=False):
     fig, axs = plt.subplots(1,2)
     axs[0].imshow(im1)
@@ -32,7 +34,7 @@ def disp(im1,im2,n,save=False):
     plt.show()
     plt.savefig('class_{}_aug.jpg'.format(n))
 
-def retrain(condition,augs,classes):
+def retrain(condition,augs,classes=43):
 
     #Original data is in a data.npy file and the new images are in train folder
     #condition (first) - retrain data.npy without any augments
@@ -47,7 +49,6 @@ def retrain(condition,augs,classes):
     height = 32
     width = 32
     channels = 3
-    #classes = 43
     n_inputs = height * width*channels
 
     #%%
@@ -90,10 +91,10 @@ def retrain(condition,augs,classes):
 
 
     cl_num = 0
-    labels = np.load('/home/abhishek/django_project4/classification/model/labels.npy', allow_pickle=True)
-    data= np.load('/home/abhishek/django_project4/classification/model/data.npy', allow_pickle=True)
-    test_data=np.load("/home/abhishek/django_project4/classification/model/X_test.npy")
-    test_labels=np.load("/home/abhishek/django_project4/classification/model/y_test.npy")
+    labels = np.load(base_dir+'/classification/model/labels.npy', allow_pickle=True)
+    data= np.load(base_dir+'/classification/model/data.npy', allow_pickle=True)
+    test_data=np.load(base_dir+"/classification/model/X_test.npy")
+    test_labels=np.load(base_dir+"/classification/model/y_test.npy")
     data2=[]
     if(condition=="first"): #first condition
         pass
@@ -110,12 +111,12 @@ def retrain(condition,augs,classes):
 
     elif(condition == "third"):
         combine()
-        new_labels=np.load("/home/abhishek/django_project4/classification/model/new_labels.npy")
-        new_data = np.load("/home/abhishek/django_project4/classification/model/new_data.npy")
+        new_labels=np.load(base_dir+"/classification/model/new_labels.npy")
+        new_data = np.load(base_dir+"/classification/model/new_data.npy")
         data=np.concatenate((data,new_data),axis=0)
         labels= np.concatenate((labels,new_labels),axis=0)
-        new_test_data=np.load("/home/abhishek/django_project4/classification/model/new_test_data.npy")
-        new_test_labels=np.load("/home/abhishek/django_project4/classification/model/new_test_labels.npy")
+        new_test_data=np.load(base_dir+"/classification/model/new_test_data.npy")
+        new_test_labels=np.load(base_dir+"/classification/model/new_test_labels.npy")
         X_test = np.concatenate((X_test,new_test_data))
         y_test = np.concatenate((y_test,new_test_labels))
         for i in tqdm.tqdm(range(len(data))):
@@ -129,10 +130,10 @@ def retrain(condition,augs,classes):
     elif(condition == "forth"):
         combine()
 
-        new_labels=np.load("/home/abhishek/django_project4/classification/model/new_labels.npy")
-        new_data = np.load("/home/abhishek/django_project4/classification/model/new_data.npy")
-        new_test_data=np.load("/home/abhishek/django_project4/classification/model/new_test_data.npy")
-        new_test_labels=np.load("/home/abhishek/django_project4/classification/model/new_test_labels.npy")
+        new_labels=np.load(base_dir+"/classification/model/new_labels.npy")
+        new_data = np.load(base_dir+"/classification/model/new_data.npy")
+        new_test_data=np.load(base_dir+"/classification/model/new_test_data.npy")
+        new_test_labels=np.load(base_dir+"/classification/model/new_test_labels.npy")
         X_test = np.concatenate((X_test,new_test_data))
         y_test = np.concatenate((y_test,new_test_labels))
 
@@ -213,7 +214,7 @@ def retrain(condition,augs,classes):
     checkpointer = ModelCheckpoint('model--1-ii.h5', verbose=1, save_best_only=True)
 
     '''
-    model.save("/home/abhishek/django_project4/classification/model/new_model.h5")
+    model.save(base_dir+"/classification/model/new_model.h5")
     model.summary()
 
     epochs = 3

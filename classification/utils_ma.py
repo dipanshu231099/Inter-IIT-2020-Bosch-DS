@@ -39,7 +39,9 @@ import innvestigate.utils.visualizations as ivis
 import innvestigate.utils
 import innvestigate.utils.tests
 import innvestigate.utils.tests.networks
+import os
 
+base_dir = os.getcwd()
 
 ###############################################################################
 # Data Preprocessing Utility
@@ -50,8 +52,8 @@ def fetch_data():
     data=[]
     labels=[]
 
-    labels = np.load('/home/abhishek/django_project4/classification/model/labels.npy')
-    data = np.load('/home/abhishek/django_project4/classification/model/data.npy')
+    labels = np.load(base_dir+'/classification/model/labels.npy')
+    data = np.load(base_dir+'/classification/model/data.npy')
 
     #%%
     #Randomize the order of the input images

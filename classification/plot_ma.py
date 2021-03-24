@@ -8,6 +8,7 @@ Created on Mon Mar 22 22:54:23 2021
 import keras
 import tensorflow as tf
 import numpy as np
+import os
 
 import innvestigate
 import innvestigate.utils as iutils
@@ -17,12 +18,13 @@ import imp
 import innvestigate
 import innvestigate.utils as iutils
 
+base_dir = os.getcwd()
 
 def investigate(path):
     model=tf.keras.models.load_model(path)
 
-    eutils = imp.load_source("utils", "/home/abhishek/django_project4/classification/utils_ma.py")
-    utils = imp.load_source("utils", "/home/abhishek/django_project4/classification/utils.py")
+    eutils = imp.load_source("utils", base_dir+"/classification/utils_ma.py")
+    utils = imp.load_source("utils", base_dir+"/classification/utils.py")
 
     data_not_preprocessed = eutils.fetch_data()
 
