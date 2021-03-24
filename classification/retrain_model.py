@@ -106,6 +106,7 @@ def retrain(condition,augs,classes):
             except:
                 pass
         data=np.concatenate((data,data2))
+        labels=np.concatenate((labels,labels))
 
     elif(condition == "third"):
         combine()
@@ -124,7 +125,7 @@ def retrain(condition,augs,classes):
             except:
                 pass
         data=np.concatenate((data,data2))
-
+        labels=np.concatenate((labels,labels))
     elif(condition == "forth"):
         combine()
 
@@ -144,6 +145,7 @@ def retrain(condition,augs,classes):
                 pass
         new_data=np.concatenate((new_data,data2))
         data=np.concatenate((data,new_data),axis=0)
+        labels= np.concatenate((labels,new_labels),axis=0)
         labels= np.concatenate((labels,new_labels),axis=0)
 
 
