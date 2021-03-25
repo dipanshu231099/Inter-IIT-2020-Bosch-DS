@@ -247,4 +247,5 @@ def analysis_model(request):
 
     analysis()
     a=model_fit_inference(loss,val_loss)
+
     return HttpResponse(a)

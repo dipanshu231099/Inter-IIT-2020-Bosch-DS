@@ -142,7 +142,8 @@ To Pan along one axis, click and drag from the center of the axis.
 Double-click on a single axis to autoscale along that axis alone.
 
 
-
+## XAI Analysis
+ After the user has analysed the graphs displayed on the `app/graphs` page he can have the app do an XAI analysis on the model after which he would be redirected to a webpage where the app would give some insights as to why is model is behaving in such a way also there would be two images displayed that would show the user what the model sees in the image to clasfy them before and after augmentation.
 
 
 
