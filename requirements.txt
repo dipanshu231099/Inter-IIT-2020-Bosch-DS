@@ -11,7 +11,6 @@ contextlib2==0.6.0
 distlib==0.3.0
 distro==1.4.0
 Django==3.1.7
-djangorestframework==3.12.2
 flatbuffers==1.12
 gast==0.3.3
 google-auth==1.27.1

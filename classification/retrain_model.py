@@ -22,6 +22,9 @@ import plotly.graph_objects as go
 import plotly.express as px
 from .make_npyfiles import *
 
+
+from tensorflow.keras.utils import to_categorical
+
 base_dir = os.getcwd()
 
 def disp(im1,im2,n,save=False):
@@ -168,7 +171,7 @@ def retrain(condition,augs,classes=43):
     (y_train,y_val)=labels[(int)(0.2*len(labels)):],labels[:(int)(0.2*len(labels))]
 
     #Using one hote encoding for the train and validation labels
-    from keras.utils import to_categorical
+    
     y_train = to_categorical(y_train, classes)
     y_val = to_categorical(y_val, classes)
 
@@ -214,10 +217,10 @@ def retrain(condition,augs,classes=43):
     checkpointer = ModelCheckpoint('model--1-ii.h5', verbose=1, save_best_only=True)
 
     '''
-    model.save(base_dir+"/classification/model/new_model.h5")
+    
     model.summary()
 
-    epochs = 3
+    epochs = 30
     history = model.fit(X_train, y_train, batch_size=32, epochs=epochs,
     validation_data=(X_val, y_val))
 
@@ -235,16 +238,21 @@ def retrain(condition,augs,classes=43):
     # plt.matshow(m)
     # plt.title('accuracy = {}'.format(accuracy_score(y_test, pred)))
     # plt.show()
+    # model_json = model.to_json()
+    # with open(base_dir+'/classification/model/ii.json', "w") as json_file:
+    #     json_file.write(model_json)
 
-    #model.save_weights('classification/model/ii_aug_no_dat.h5')   #give correct path to save the model
-
+    #model.save_weights(base_dir+'/classification/model/ii.h5')   #give correct path to save the model
+    
+    #model.save(base_dir+"/classification/model/new_model.h5")
+    
 
 
     accu_score=accuracy_score(test_labels,pred)
     m = confusion_matrix(test_labels, pred)
 
 
-    return history.history['accuracy'],history.history['val_accuracy'],history.history['loss'],history.history['val_loss'],m,accu_score
+    return history.history.get('acc'),history.history['val_acc'],history.history['loss'],history.history['val_loss'],m,accu_score
 
 
 
