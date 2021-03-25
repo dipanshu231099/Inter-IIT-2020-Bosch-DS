@@ -2,7 +2,7 @@
 This document gives easy steps to install/set-up and to use the web app which will enable to user to interact with the model.
 
 ## 1.1 Installation and Setup
->`Note` The user should have python 3.7 installed.<br>
+>`Note` The user should have python 3.7 installed. <br>
 Go the drive link [link]()
 
 Extract the files from the INTER_IIT folder,there would be one folder:
@@ -72,17 +72,17 @@ This will take you to "/app/TestImage/" . The form will will enable the user to 
 
 The page has 4 pipelines all adressing one of the above problems.<br>
 - The first button will simply retrain the original model of 43 classes and show that the default graphs that are displayed later in the webpage will match the new graphs that would be generated.<br>
-> `button1-->retraining-->graphs-->XAI analysis`
+`button1-->retraining-->graphs-->XAI analysis`
 
 - The second button will take you to the augmenttation page and enable you to add augmentations to the original training data then the user will be displayed one randomply chosen pair or original vs augmented from each class.
 After verifiying that the augmentations are corrctly done the user can then retrain the data after which he will be displayed graphs of the model before and after augmentations.<br>
->`button2-->augmentation-->original vs augmented images-->retraining-->graphs-->XAI Analysis`
+`button2-->augmentation-->original vs augmented images-->retraining-->graphs-->XAI Analysis`
 
 - The third button will take you to the add images page where the user can add images to the 48 classes and then he would be directed to an intermediate page (by clicking the `retrain button`
 at the end of the form)
  that would check if the user wants to apply the augmentations to the newly added 5  classes or to the whole data set.After which the user would be directed to a webpage where he can see the original vs augmented image from each augmented class.The augmeted images would then be added with the training data and the model would be trained again.The page will then be directed to graphs webpage where he can see the graphs showing the statistics of the original vs the augmented model .<br>
 
->`button3--> augment and then merege or merge and then augment--> augmentation--> original vs augmented images--> retraining--> graphs--> XAI analysis`
+`button3--> augment and then merege or merge and then augment--> augmentation--> original vs augmented images--> retraining--> graphs--> XAI analysis`
 
 -The fourth button will take the user to the testTraining image page where the user would be able to test any image and predict its class. The images class would be predicted using the default model that was trained over the given 43 plus the additional 5 classes that were added by us.
 
