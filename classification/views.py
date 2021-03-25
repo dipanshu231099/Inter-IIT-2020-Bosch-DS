@@ -138,20 +138,20 @@ def re_train_model(request):
 
     if(request.session['token'] ==1):
         acc,val_acc,loss,val_loss,m,accu_score=retrain("first",list(request.session['augs'].split(",")),43)
-        plotgraphs(4,acc,val_acc,loss,val_loss,m,accu_score)
+        plotgraphs(31,acc,val_acc,loss,val_loss,m,accu_score)
         request.session['token'] == 0
         return render(request,"graphs.html")
 
     elif(request.session['token']==2):
         acc,val_acc,loss,val_loss,m,accu_score=retrain("second",list(request.session['augs'].split(",")),43)
-        plotgraphs(4,acc,val_acc,loss,val_loss,m,accu_score)
+        plotgraphs(31,acc,val_acc,loss,val_loss,m,accu_score)
         request.session['token'] == 0
         return render(request,"graphs.html")
 
     elif(request.session['token'] ==3):
 
         acc,val_acc,loss,val_loss,m,accu_score=retrain("third",list(request.session['augs'].split(",")),48)
-        plotgraphs(4,acc,val_acc,loss,val_loss,m,accu_score)
+        plotgraphs(31,acc,val_acc,loss,val_loss,m,accu_score)
         request.session['token'] == 0
         return render(request,"graphs.html")
 
@@ -159,7 +159,7 @@ def re_train_model(request):
     elif (request.session['token']== 4):
 
         acc,val_acc,loss,val_loss,m,accu_score=retrain("forth",list(request.session['augs'].split(",")),48)
-        plotgraphs(4,acc,val_acc,loss,val_loss,m,accu_score)
+        plotgraphs(31,acc,val_acc,loss,val_loss,m,accu_score)
         request.session['token'] == 0
         return render(request,"graphs.html")
 
