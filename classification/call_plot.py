@@ -40,5 +40,4 @@ def analysis():
     )
 
     model.load_weights(base_dir+'/classification/new_model/new_model_weights.h5')
-
     investigate(model, base_dir+'/classification/static/XAI/XAI_analysis.jpg')

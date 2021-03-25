@@ -41,7 +41,11 @@ def testImage(request):
         image = request.FILES['testing_file']
         if form1.is_valid():
             pred=getpredictions(image)
-            return HttpResponse(pred)
+            new_classes_imgs=[]
+            classes_img = 'sign_images/classes_signs.png'
+            for k in range(43,48):
+                new_classes_imgs.append('sign_images/'+str(k)+'.png')
+            return render(request, 'showPrediction.html', {'prediction':pred, 'classes_img':classes_img, 'new_classes_img':new_classes_imgs})
         else:
             form1 = UploadTestImage()
     return render(request, 'testImage.html', {'form1':form1})
@@ -99,6 +103,7 @@ def getpredictions(img):
     loaded_model.load_weights(base_dir+'/classification/model/ii.h5')
     pred=loaded_model.predict(im)
     c=sorted(os.listdir(base_dir+"/User_Custom_Train"))
+    pred = np.argmax(pred)
     return pred
 
 
@@ -244,8 +249,10 @@ def graphs(request):
     return render(request,"graphs.html")
 
 def analysis_model(request):
-
+    loss = list(np.load(base_dir+'/classification/new_model/train_loss.npy'))
+    val_loss = list(np.load(base_dir+'/classification/new_model/val_loss.npy'))
     analysis()
-    a=model_fit_inference(loss,val_loss)
+    inference=model_fit_inference(loss,val_loss)
+    images = [('XAI/XAI_analysis.jpg','Retrained Model','XAI/ORIGINAL_XAI.jpg','Original Model')]
 
-    return HttpResponse(a)
+    return render(request, 'analysis.html', {'images':images,'inference':inference})

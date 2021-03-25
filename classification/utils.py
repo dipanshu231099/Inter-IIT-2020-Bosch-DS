@@ -152,8 +152,8 @@ def plot_image_grid(grid,
                     )
 
     if file_name is None:
-        plt.show()
+        pass
     else:
         print('Saving figure to {}'.format(file_name))
         plt.savefig(file_name, orientation='landscape', dpi=dpi, bbox_inches='tight')
-        plt.show()
+        plt.close()
