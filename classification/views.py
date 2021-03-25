@@ -24,13 +24,15 @@ from .retrain_model import *
 from .display_images import *
 from .plot import *
 from .plot_ma import *
-
-
+from .call_plot import *
+from .model_fit_inference import *
 
 from plotly.offline import plot
 from plotly.graph_objs import Scatter
 
 base_dir = os.getcwd()
+hard_code = 3
+
 
 def testImage(request):
     form1 = UploadTestImage()
@@ -135,23 +137,24 @@ def Merge(request):
     return render (request,"Merge_or_not.html")
 
 def re_train_model(request):
-
+    global loss
+    global val_loss
     if(request.session['token'] ==1):
         acc,val_acc,loss,val_loss,m,accu_score=retrain("first",list(request.session['augs'].split(",")),43)
-        plotgraphs(31,acc,val_acc,loss,val_loss,m,accu_score)
+        plotgraphs(hard_code,acc,val_acc,loss,val_loss,m,accu_score)
         request.session['token'] == 0
         return render(request,"graphs.html")
 
     elif(request.session['token']==2):
         acc,val_acc,loss,val_loss,m,accu_score=retrain("second",list(request.session['augs'].split(",")),43)
-        plotgraphs(31,acc,val_acc,loss,val_loss,m,accu_score)
+        plotgraphs(hard_code,acc,val_acc,loss,val_loss,m,accu_score)
         request.session['token'] == 0
         return render(request,"graphs.html")
 
     elif(request.session['token'] ==3):
 
         acc,val_acc,loss,val_loss,m,accu_score=retrain("third",list(request.session['augs'].split(",")),48)
-        plotgraphs(31,acc,val_acc,loss,val_loss,m,accu_score)
+        plotgraphs(hard_code,acc,val_acc,loss,val_loss,m,accu_score)
         request.session['token'] == 0
         return render(request,"graphs.html")
 
@@ -159,7 +162,7 @@ def re_train_model(request):
     elif (request.session['token']== 4):
 
         acc,val_acc,loss,val_loss,m,accu_score=retrain("forth",list(request.session['augs'].split(",")),48)
-        plotgraphs(31,acc,val_acc,loss,val_loss,m,accu_score)
+        plotgraphs(hard_code,acc,val_acc,loss,val_loss,m,accu_score)
         request.session['token'] == 0
         return render(request,"graphs.html")
 
@@ -241,4 +244,7 @@ def graphs(request):
     return render(request,"graphs.html")
 
 def analysis_model(request):
-    investigate(base_dir+'/classification/model/new_model.h5')
+
+    analysis()
+    a=model_fit_inference(loss,val_loss)
+    return HttpResponse(a)

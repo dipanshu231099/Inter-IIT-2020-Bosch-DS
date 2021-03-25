@@ -4,6 +4,7 @@ db.sqlite3
 .vscode
 temp/**
 media/*
+classification/static/XAI/*
 classification/static/**/augmented_images/**/all_classes/**/original/**/augmented/**
 classification/static/**/augmented_images/**/new_classes/**/original/**/augmented/**
 classification/static/**/augmented_images/**/Orig_classes/**/original/**/augmented/**
@@ -19,3 +20,4 @@ User_Custom_Train/*
 HP-STSE.wiki/
 classification/static/augmented_images/Orig_classes/original/*
 classification/static/augmented_images/Orig_classes/augmented/*
+classification/new_model/*

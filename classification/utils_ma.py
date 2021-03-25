@@ -41,13 +41,11 @@ import innvestigate.utils.tests
 import innvestigate.utils.tests.networks
 import os
 
-base_dir = os.getcwd()
-
 ###############################################################################
 # Data Preprocessing Utility
 ###############################################################################
 
-
+base_dir=os.getcwd()
 def fetch_data():
     data=[]
     labels=[]

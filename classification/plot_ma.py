@@ -8,23 +8,20 @@ Created on Mon Mar 22 22:54:23 2021
 import keras
 import tensorflow as tf
 import numpy as np
-import os
 
 import innvestigate
 import innvestigate.utils as iutils
 import matplotlib.pyplot as plt
-
+import os
 import imp
 import innvestigate
 import innvestigate.utils as iutils
 
-base_dir = os.getcwd()
-
-def investigate(path):
-    model=tf.keras.models.load_model(path)
-
+base_dir=os.getcwd()
+def investigate(model, filename):
     eutils = imp.load_source("utils", base_dir+"/classification/utils_ma.py")
     utils = imp.load_source("utils", base_dir+"/classification/utils.py")
+    imgnetutils = imp.load_source('utils_imagenet', base_dir+'/classification/utils_imagenet.py')
 
     data_not_preprocessed = eutils.fetch_data()
 
@@ -43,39 +40,38 @@ def investigate(path):
     def input_postprocessing(X):
         return revert_preprocessing(X) / 255
 
+
     noise_scale = (input_range[1]-input_range[0]) * 0.1
     ri = input_range[0]  # reference input
 
 
     # Configure analysis methods and properties
     methods = [
-        # NAME                    OPT.PARAMS                POSTPROC FXN               TITLE
+    # NAME                    OPT.PARAMS                POSTPROC FXN                TITLE
+    # Show input.
+    ("input",                 {},                       imgnetutils.image,         "Input"),
 
-        # Show input
-        ("input",                 {},                       input_postprocessing,      "Input"),
+    # Function
+    ("gradient",              {"postprocess": "abs"},   imgnetutils.graymap,       "Gradient"),
+    ("smoothgrad",            {"augment_by_n": 64,
+                               "noise_scale": noise_scale,
+                               "postprocess": "square"},imgnetutils.graymap,       "SmoothGrad"),
 
-        # Function
-        ("gradient",              {"postprocess": "abs"},   eutils.graymap,        "Gradient"),
-        ("smoothgrad",            {"noise_scale": noise_scale,
-                                   "postprocess": "square"},eutils.graymap,        "SmoothGrad"),
+    # Signal
+    ("deconvnet",             {},                       imgnetutils.bk_proj,       "Deconvnet"),
+    ("guided_backprop",       {},                       imgnetutils.bk_proj,       "Guided Backprop",),
 
-        # Signal
-        ("deconvnet",             {},                       eutils.bk_proj,        "Deconvnet"),
-        ("guided_backprop",       {},                       eutils.bk_proj,        "Guided Backprop",),
-        ("pattern.net",           {"pattern_type": "relu"}, eutils.bk_proj,        "PatternNet"),
-
-        # Interaction
-        ("pattern.attribution",   {"pattern_type": "relu"}, eutils.heatmap,        "PatternAttribution"),
-        ("deep_taylor.bounded",   {"low": input_range[0],
-                                   "high": input_range[1]}, eutils.heatmap,        "DeepTaylor"),
-        ("input_t_gradient",      {},                       eutils.heatmap,        "Input * Gradient"),
-        ("integrated_gradients",  {"reference_inputs": ri}, eutils.heatmap,        "Integrated Gradients"),
-        ("deep_lift.wrapper",     {"reference_inputs": ri}, eutils.heatmap,        "DeepLIFT Wrapper - Rescale"),
-        ("deep_lift.wrapper",     {"reference_inputs": ri, "nonlinear_mode": "reveal_cancel"},
-                                                            eutils.heatmap,        "DeepLIFT Wrapper - RevealCancel"),
-        ("lrp.z",                 {},                       eutils.heatmap,        "LRP-Z"),
-        ("lrp.epsilon",           {"epsilon": 1},           eutils.heatmap,        "LRP-Epsilon"),
-    ]
+    # Interaction
+    ("deep_taylor.bounded",   {"low": 0,
+                               "high": 1}, imgnetutils.heatmap,       "DeepTaylor"),
+    ("input_t_gradient",      {},                       imgnetutils.heatmap,       "Input * Gradient"),
+    ("integrated_gradients",  {"reference_inputs": input_range[0],
+                               "steps": 64},            imgnetutils.heatmap,       "Integrated Gradients"),
+    ("lrp.z",                 {},                       imgnetutils.heatmap,       "LRP-Z"),
+    ("lrp.epsilon",           {"epsilon": 1},           imgnetutils.heatmap,       "LRP-Epsilon"),
+    ("lrp.sequential_preset_a_flat",{"epsilon": 1},     imgnetutils.heatmap,       "LRP-PresetAFlat"),
+    ("lrp.sequential_preset_b_flat",{"epsilon": 1},     imgnetutils.heatmap,       "LRP-PresetBFlat"),
+]
 
     model_wo_softmax = iutils.keras.graph.model_wo_softmax(model)
 
@@ -124,8 +120,8 @@ def investigate(path):
                 a = methods[aidx][2](a)
                 # Store the analysis.
                 analysis[i, aidx] = a[0]
-            except :
-                print('')
+            except Exception as e:
+                print(e)
 
 
     grid = [[analysis[i, j] for j in range(analysis.shape[1])]
@@ -138,7 +134,7 @@ def investigate(path):
 
     # Plot the analysis.
     eutils.plot_image_grid(grid, row_labels_left, row_labels_right, col_labels,
-                           file_name="classification/model")
+                           file_name=filename)
 
 
 

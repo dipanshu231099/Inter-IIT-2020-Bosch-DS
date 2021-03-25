@@ -12,6 +12,6 @@ urlpatterns = [
     path('home/', views.direct , name="home"),
     path('Merge/', views.Merge , name="hub2"),
     path('image/', views.display_images , name="hub3"),
-    path('analysis.', views.analysis_model,name="analysis")
+    path('analysis/', views.analysis_model,name="analysis")
 ]
 #

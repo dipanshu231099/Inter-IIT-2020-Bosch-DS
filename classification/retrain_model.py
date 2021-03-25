@@ -171,7 +171,7 @@ def retrain(condition,augs,classes=43):
     (y_train,y_val)=labels[(int)(0.2*len(labels)):],labels[:(int)(0.2*len(labels))]
 
     #Using one hote encoding for the train and validation labels
-    
+
     y_train = to_categorical(y_train, classes)
     y_val = to_categorical(y_val, classes)
 
@@ -217,10 +217,10 @@ def retrain(condition,augs,classes=43):
     checkpointer = ModelCheckpoint('model--1-ii.h5', verbose=1, save_best_only=True)
 
     '''
-    
+
     model.summary()
 
-    epochs = 30
+    epochs = 2
     history = model.fit(X_train, y_train, batch_size=32, epochs=epochs,
     validation_data=(X_val, y_val))
 
@@ -242,12 +242,13 @@ def retrain(condition,augs,classes=43):
     # with open(base_dir+'/classification/model/ii.json', "w") as json_file:
     #     json_file.write(model_json)
 
-    #model.save_weights(base_dir+'/classification/model/ii.h5')   #give correct path to save the model
-    
-    #model.save(base_dir+"/classification/model/new_model.h5")
-    
+    model.save_weights(base_dir+'/classification/new_model/new_model_weights.h5')   #give correct path to save the model
+
+    model.save(base_dir+"/classification/new_model/new_model.h5")
 
 
+    np.save(base_dir+'/classification/new_model/train_loss.npy',np.array(history.history['loss']))
+    np.save(base_dir+'/classification/new_model/val_loss.npy',np.array(history.history['val_loss']))
     accu_score=accuracy_score(test_labels,pred)
     m = confusion_matrix(test_labels, pred)
 

@@ -91,7 +91,7 @@ at the end of the form)
 
 The augmentations are added to image by visiting the `/app/augment` relative path on the server for the platform.
 
-The LHS of the augmentations are the available types of augmentations that can be applied on the images. On clicking a augmentation it will turn green and get selected on the RHS also. In case you want to remove this augmentatoin from the list you can simply reclick on that augmentation from the LHS. 
+The LHS of the augmentations are the available types of augmentations that can be applied on the images. On clicking a augmentation it will turn green and get selected on the RHS also. In case you want to remove this augmentatoin from the list you can simply reclick on that augmentation from the LHS.
 
 Once the augmentations are selected click on `submit` once all augmentations have been added
 
@@ -125,7 +125,7 @@ In `home/app/graphs` the graphs corresponding to the original trained model and 
 ## Inferences from the Graphs:
 From the first graph “Accuracy”, we can infer the accuracy of the model corresponding to the number of epochs. There are two lines : the blue line depicts the training accuracy and the red line depicts the value accuracy of the model. Similarly, from the second graph “Loss”, we can infer the loss of the model corresponding to the number of epochs. There are two lines : the blue line depicts the training loss and the red line depicts the value loss of the model.  The final plot is a heatmap of the confusion matrix.
 
-## Functionalities of the graphs: 
+## Functionalities of the graphs:
 When hovered upon any plot, a toolbar consisting of all available options appears on right side just above the plot. It provides the user tools for analyzing data and making graphs which are listed below in a detailed manner.
 More information about a data point is revealed by moving your mouse cursor over the point and having a hover label appear which indicates the X and Y values corresponding to that data point.
 If the plot's drag mode is set to 'Zoom', click and drag on the plot to zoom-in and double-click to zoom-out completely, i.e., autoscale both the axes.
@@ -143,7 +143,7 @@ Double-click on a single axis to autoscale along that axis alone.
 
 
 
-    
+
 
 
 
