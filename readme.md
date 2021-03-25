@@ -9,12 +9,21 @@ Extract the files from the INTER_IIT folder,there would be one folder:
 
 - `BOSCH_sign` is the folder having all the `code+ training data + models + requirements.txt`.
 
-## Start the virtual environment:
-cd into the INTER_IIT folder and run the folowing command
+## Create the virtual environment:
+Create a virtual envirionmnent in the choice of your directory by running the following command.
 ```
-source BOSCH_sign/bin/activate
+$python3.7 -m venv env-name
 ```
-This will start the virtual environment
+Activate the virtual environment by running the following command.
+```
+source env-name/bin/activate
+```
+After that, install all the required dependencies from the `requirements.txt` file that is stored in the `BOSCH_sign` folder
+```
+pip install -r requirements.txt
+```
+
+
 
 
 
