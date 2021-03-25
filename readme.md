@@ -10,7 +10,7 @@ Extract the files from the INTER_IIT folder,there would be one folder:
 - `BOSCH_sign` is the folder having all the `code+ training data + models + requirements.txt`.
 
 ## Create the virtual environment:
-Create a virtual envirionmnent in the choice of your directory by running the following command.
+Create a virtual envirionmnent in the choice of your directory by running the following command in the `terminal`
 ```
 $python3.7 -m venv env-name
 ```
@@ -31,9 +31,10 @@ pip install -r requirements.txt
 
 ### 1.1.3 Run the Django server.
 
-- cd into the BOSCH_sign filder and run the following commands to start the server.
+- cd into the BOSCH_sign folder and run the following commands to start the server.
 ```
 python3.7 manage.py runserver
+
 ```
 - make migrations, the make migrations will only be needed to be done once.
 ```
@@ -58,6 +59,8 @@ To solve the above cases diffrent pathways(url paths/links) have been made with 
 
 ### 1.1.2 Homepage.
 
+
+
 #### Navbar
 Everypage will have the navbar and The navbar has two buttons:<br>
 1. Home:<br>
@@ -69,6 +72,8 @@ This will take you to "/app/TestImage/" . The form will will enable the user to 
 
 
 #### Localhost:8000/app/home:
+
+> :warning: *Whereever you see an opton to retrain press it only once and wait for some time as it might take a bit to train the model clicking a retrain button multiple time will initiate multiple retrains in parallel you can check the training process on your terminal while retraining*!
 
 The page has 4 pipelines all adressing one of the above problems.<br>
 - The first button will simply retrain the original model of 43 classes and show that the default graphs that are displayed later in the webpage will match the new graphs that would be generated.<br>
