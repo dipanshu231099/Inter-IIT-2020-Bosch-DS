@@ -20,4 +20,8 @@ User_Custom_Train/*
 HP-STSE.wiki/
 classification/static/augmented_images/Orig_classes/original/*
 classification/static/augmented_images/Orig_classes/augmented/*
+classification/static/augmented_images/new_classes/original/*
+classification/static/augmented_images/new_classes/augmented/*
+classification/static/augmented_images/all_classes/original/*
+classification/static/augmented_images/all_classes/augmented/*
 classification/new_model/*

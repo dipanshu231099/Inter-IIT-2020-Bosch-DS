@@ -31,7 +31,7 @@ from plotly.offline import plot
 from plotly.graph_objs import Scatter
 
 base_dir = os.getcwd()
-hard_code = 3
+hard_code = 31
 
 
 def testImage(request):
@@ -134,10 +134,10 @@ def Merge(request):
             request.session['token'] = 3
             return redirect("/app/augment/")
 
-        if request.POST.get('aug1')=="Second":
+        if request.POST.get('aug1')=="second":
             display("second",[])
             request.session['token'] = 4
-            return redirect("app/augment/")
+            return redirect("/app/augment/")
 
     return render (request,"Merge_or_not.html")
 
@@ -175,7 +175,7 @@ def re_train_model(request):
         return HttpResponse("hello world")
 
 def display_images(request):
-
+    images=[]
     if(request.session['token'] == 2):
         images=[]
         original="augmented_images/Orig_classes/original"
@@ -190,25 +190,26 @@ def display_images(request):
         return render(request,"dis_org_aug.html",context={'images':images})
 
     elif(request.session['token'] == 3):
+        images=[]
         original="augmented_images/all_classes/original"
         augmented="augmented_images/all_classes/augmented"
         im1=sorted(os.listdir(base_dir+'/classification/static/augmented_images/all_classes/original'))
         im2=sorted(os.listdir(base_dir+'/classification/static/augmented_images/all_classes/augmented'))
         for i in range(0,len(im1)):
-            a=original+im1[i]
-            b=augmented+im2[i]
+            a=original+'/'+im1[i]
+            b=augmented+'/'+im2[i]
             c=[a,im1[i],b,im2[i]]
             images.append(c)
-
+        return render(request,"dis_org_aug.html",context={'images':images})
     elif(request.session['token'] == 4):
-
+        images=[]
         original="augmented_images/new_classes/original"
         augmented="augmented_images/new_classes/augmented"
         im1=sorted(os.listdir(base_dir+'/classification/static/augmented_images/new_classes/original'))
         im2=sorted(os.listdir(base_dir+'/classification/static/augmented_images/new_classes/augmented'))
         for i in range(0,len(im1)):
-            a=original+im1[i]
-            b=augmented+im2[i]
+            a=original+'/'+im1[i]
+            b=augmented+'/'+im2[i]
             c=[a,im1[i],b,im2[i]]
             images.append(c)
 

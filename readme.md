@@ -31,7 +31,8 @@ pip install -r requirements.txt
 
 ### 1.1.3 Run the Django server.
 
-- cd into the BOSCH_sign folder and run the following commands to start the server.
+- cd into the BOSCH_sign folder and run the following commands to start the server. <br>
+`NOTE` In case of a crash rerun this command
 ```
 python3.7 manage.py runserver
 

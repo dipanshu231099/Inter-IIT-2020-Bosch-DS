@@ -37,7 +37,7 @@ def disp(im1,im2,n,save=False):
     plt.show()
     plt.savefig('class_{}_aug.jpg'.format(n))
 
-def retrain(condition,augs,classes=43):
+def retrain(condition,augs,classes):
 
     #Original data is in a data.npy file and the new images are in train folder
     #condition (first) - retrain data.npy without any augments
@@ -220,7 +220,7 @@ def retrain(condition,augs,classes=43):
 
     model.summary()
 
-    epochs = 2
+    epochs = 30
     history = model.fit(X_train, y_train, batch_size=32, epochs=epochs,
     validation_data=(X_val, y_val))
 
