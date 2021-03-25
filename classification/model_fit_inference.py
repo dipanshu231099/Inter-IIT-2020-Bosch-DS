@@ -21,11 +21,11 @@ def model_fit_inference(train_loss, val_loss):
     A string containing all the inferences based on training and validation loss
     """
     SLOPE_THRES = 0.01
-    SLOPE_LOOKBACK = 10
+    SLOPE_LOOKBACK = 1 #fina 3
     SLOPE_AVG_THRES = -0.3
     EPS = 1e-7
     COFF_VAR_THRES = 0.3
-    WINDOW = 1
+    WINDOW = 1  #final=3
 
     msg = ""
 
