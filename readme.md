@@ -2,7 +2,7 @@
 This document gives easy steps to install/set-up and to use the web app which will enable to user to interact with the model.
 
 ## 1.1 Installation and Setup
->`Note` The user should have python 3.7 installed.
+>`Note` The user should have python 3.7 installed.<br>
 Go the drive link [link]()
 
 Extract the files from the INTER_IIT folder,there would be two folders:
