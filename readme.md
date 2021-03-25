@@ -3,7 +3,7 @@ This document gives easy steps to install/set-up and to use the web app which wi
 
 ## 1.1 Installation and Setup
 >`Note` The user should have python 3.7 installed. <br>
-Go the drive link [link]()
+Go the drive link [link](https://drive.google.com/drive/folders/1cJDIbhzLYxPJarkTMnOBG4ssflOfFHw4?usp=sharing)
 
 Extract the files from the INTER_IIT folder,there would be one folder:
 
@@ -86,11 +86,11 @@ After verifiying that the augmentations are corrctly done the user can then retr
 - The third button will take you to the add images page where the user can add images to the 48 classes and then he would be directed to an intermediate page (by clicking the `retrain button`
 at the end of the form)
  that would check if the user wants to apply the augmentations to the newly added 5  classes or to the whole data set.After which the user would be directed to a webpage where he can see the original vs augmented image from each augmented class.The augmeted images would then be added with the training data and the model would be trained again.The page will then be directed to graphs webpage where he can see the graphs showing the statistics of the original vs the augmented model .<br>
-
 `button3--> augment and then merege or merge and then augment--> augmentation--> original vs augmented images--> retraining--> graphs--> XAI analysis`
 
--The fourth button will take the user to the testTraining image page where the user would be able to test any image and predict its class. The images class would be predicted using the default model that was trained over the given 43 plus the additional 5 classes that were added by us.
+- The fourth button will take the user to the testTraining image page where the user would be able to test any image and predict its class. The images class would be predicted using the default model that was trained over the given 43 plus the additional 5 classes that were added by us.
 
+- The fifth button will show you the graphs of the model.
 
 >`Note`: We have used session variables to check which case is in working right now hence making migrationas as specified above is a must and the user should most ideadly follow the pipeline going straight to a particular `url`that lies in the middle of the pipeline should be avoided.
 
