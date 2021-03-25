@@ -4,10 +4,12 @@
 
 
  <body>
-
-    <button>
-        <a class="nav-link" href="{% url 'analysis' %}">XAI analysis</a> </button>
+  <div class='container'>
+  <a href="{% url 'analysis' %}" style='color:white'>
+  <button class='btn btn-primary w-100'>
+      XAI analysis</button>
   <h1>
+  </a> 
    Original Graph Statictics
   </h1>
   {%include "orig_graph.html" %}
@@ -15,10 +17,7 @@
    Retrained Graph Statictics
     {%include "temp_graphs.html" %}
   </h1>
-
-
-
-
+  </div>
 
 </body>
 
